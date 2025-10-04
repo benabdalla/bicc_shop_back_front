@@ -1,0 +1,179 @@
+<div class="page-content">
+  <div class="d-flex mb-2">
+    <h3>Points de collecte</h3>
+    <div class="ms-auto">
+      <a
+        data-bs-toggle="modal"
+        data-bs-target="#saveOrUpdateModal"
+        (click)="onSelect(null, 'create')"
+        class="btn btn-primary radius-30 mt-2 mt-lg-0"
+        ><i class="bx bxs-plus-square"></i>Ajouter un point de collecte</a
+      >
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Nom</th>
+              <th>Adresse</th>
+              <th>District</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of collectionPoints; let i = index">
+              <td>{{ a.id }}</td>
+              <td>{{ a.name }}</td>
+              <td>{{ a.address }}</td>
+              <td>{{ a.district }}</td>
+              <td>
+                <div class="d-flex order-actions">
+                  <a
+                    class="cursor-pointer"
+                    data-bs-toggle="modal"
+                    data-bs-target="#saveOrUpdateModal"
+                    (click)="onSelect(a, 'update')"
+                    ><i class="bx bxs-edit"></i
+                  ></a>
+                  <a
+                    class="ms-3 cursor-pointer"
+                    data-bs-toggle="modal"
+                    (click)="onSelect(a, 'delete')"
+                    data-bs-target="#deleteModal"
+                    ><i class="bx bxs-trash"></i
+                  ></a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="saveOrUpdateModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Détails du point de collecte
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control rounded-3"
+                id="name"
+                placeholder="Nom"
+                [(ngModel)]="selected.name"
+                name="name"
+              />
+              <label for="name">Nom</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control rounded-3"
+                id="address"
+                placeholder="Adresse"
+                [(ngModel)]="selected.address"
+                name="address"
+              />
+              <label for="address">Adresse</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control rounded-3"
+                id="district"
+                placeholder="District"
+                [(ngModel)]="selected.district"
+                name="district"
+              />
+              <label for="district">District</label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Fermer
+          </button>
+          <button
+            (click)="saveOrUpdate()"
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+          >
+            Enregistrer les modifications
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="deleteModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Confirmation de suppression
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          Êtes-vous sûr de vouloir supprimer cet élément ?
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Annuler
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="onDelete()"
+            data-bs-dismiss="modal"
+          >
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

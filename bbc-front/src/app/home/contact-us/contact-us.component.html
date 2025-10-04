@@ -1,0 +1,553 @@
+<div class="container-fluid py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <!-- Header Section -->
+      <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary mb-3">
+          <i class="bi bi-envelope-paper me-2"></i>
+          Contactez-nous
+        </h2>
+        <p class="text-muted fs-5">
+          Notre équipe est à votre disposition. N’hésitez pas à nous transmettre
+          vos questions, remarques ou préoccupations ; nous vous répondrons dans
+          les plus brefs délais.
+        </p>
+      </div>
+
+      <!-- User Status Information -->
+      <div
+        *ngIf="isLoggedIn"
+        class="alert alert-info d-flex align-items-center mb-4"
+      >
+        <i class="bi bi-person-check-fill me-2"></i>
+        <div>
+          <strong>Bon retour parmi nous !</strong> Vos informations ont été
+          pré-remplies.
+          <a
+            href="javascript:void(0)"
+            (click)="goToCustomerDashboard()"
+            class="text-decoration-none ms-2"
+          >
+            <i class="bi bi-arrow-right-circle me-1"></i>Accéder au tableau de
+            bord
+          </a>
+        </div>
+      </div>
+
+      <div
+        *ngIf="!isLoggedIn"
+        class="alert alert-secondary d-flex align-items-center mb-4"
+      >
+        <i class="bi bi-info-circle me-2"></i>
+        <div>
+          <strong>Nouveau ici ?</strong> Vous pouvez nous contacter sans créer
+          de compte, ou
+          <a routerLink="/customer/auth" class="text-decoration-none ms-1">
+            <i class="bi bi-box-arrow-in-right me-1"></i>se connecter
+          </a>
+          pour pré-remplir vos informations.
+        </div>
+      </div>
+
+      <!-- Success Message -->
+      <div
+        *ngIf="successMessage"
+        class="alert alert-success alert-dismissible fade show"
+        role="alert"
+      >
+        <i class="bi bi-check-circle-fill me-2"></i>
+        <div [innerHTML]="successMessage" style="white-space: pre-line"></div>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="successMessage = ''"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <!-- Error Message -->
+      <div
+        *ngIf="errorMessage"
+        class="alert alert-danger alert-dismissible fade show"
+        role="alert"
+      >
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <strong>Erreur :</strong> {{ errorMessage }}
+        <button
+          type="button"
+          class="btn-close"
+          (click)="errorMessage = ''"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="card-title mb-0">
+            <i class="bi bi-chat-left-text me-2"></i>
+            Envoyez-nous un message
+          </h4>
+        </div>
+
+        <div class="card-body">
+          <form
+            [formGroup]="complaintForm"
+            (ngSubmit)="submitContactForm()"
+            novalidate
+          >
+            <!-- Customer Information Section -->
+            <div class="row mb-4">
+              <h5 class="text-secondary mb-3">
+                <i class="bi bi-person me-2"></i>
+                Vos informations
+              </h5>
+
+              <!-- Customer Name -->
+              <div class="col-md-6 mb-3">
+                <label for="customerName" class="form-label">
+                  <strong>Nom complet</strong>
+                  <span class="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="customerName"
+                  class="form-control"
+                  [class.is-invalid]="
+                    f['customerName'].invalid &&
+                    (f['customerName'].dirty || submitted)
+                  "
+                  [class.is-valid]="
+                    f['customerName'].valid &&
+                    (f['customerName'].dirty || submitted)
+                  "
+                  formControlName="customerName"
+                  placeholder="Entrez votre nom complet"
+                  maxlength="100"
+                />
+                <div class="invalid-feedback">
+                  <div *ngIf="f['customerName'].errors?.['required']">
+                    Le nom complet est requis.
+                  </div>
+                  <div *ngIf="f['customerName'].errors?.['minlength']">
+                    Le nom doit comporter au moins 2 caractères.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Customer Email -->
+              <div class="col-md-6 mb-3">
+                <label for="customerEmail" class="form-label">
+                  <strong>Adresse e-mail</strong>
+                  <span class="text-danger">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="customerEmail"
+                  class="form-control"
+                  [class.is-invalid]="
+                    f['customerEmail'].invalid &&
+                    (f['customerEmail'].dirty || submitted)
+                  "
+                  [class.is-valid]="
+                    f['customerEmail'].valid &&
+                    (f['customerEmail'].dirty || submitted)
+                  "
+                  formControlName="customerEmail"
+                  placeholder="Entrez votre adresse e-mail"
+                  maxlength="100"
+                />
+                <div class="invalid-feedback">
+                  <div *ngIf="f['customerEmail'].errors?.['required']">
+                    L'adresse e-mail est requise.
+                  </div>
+                  <div *ngIf="f['customerEmail'].errors?.['email']">
+                    Veuillez entrer une adresse e-mail valide.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Customer Address -->
+              <div class="col-12 mb-3">
+                <label for="customerAddress" class="form-label">
+                  <strong>Adresse</strong>
+                  <span class="text-muted">(Optionnel)</span>
+                </label>
+                <textarea
+                  id="customerAddress"
+                  class="form-control"
+                  formControlName="customerAddress"
+                  placeholder="Entrez votre adresse (optionnel)"
+                  rows="2"
+                  maxlength="255"
+                ></textarea>
+                <div class="form-text">
+                  <i class="bi bi-info-circle me-1"></i>
+                  Cela nous aide à mieux vous assister pour les demandes liées
+                  aux commandes.
+                </div>
+              </div>
+            </div>
+
+            <!-- Message Details Section -->
+            <div class="row mb-4">
+              <h5 class="text-secondary mb-3">
+                <i class="bi bi-chat-square-text me-2"></i>
+                Détails du message
+              </h5>
+
+              <!-- Category -->
+              <div class="col-md-6 mb-3">
+                <label for="category" class="form-label">
+                  <strong>Catégorie</strong> <span class="text-danger">*</span>
+                </label>
+                <select
+                  id="category"
+                  class="form-select"
+                  [class.is-invalid]="
+                    f['category'].invalid && (f['category'].dirty || submitted)
+                  "
+                  [class.is-valid]="
+                    f['category'].valid && (f['category'].dirty || submitted)
+                  "
+                  formControlName="category"
+                >
+                  <option value="" disabled>Sélectionnez une catégorie</option>
+                  <option
+                    *ngFor="let category of complaintCategories"
+                    [value]="category.value"
+                  >
+                    {{ category.label }}
+                  </option>
+                </select>
+                <div class="invalid-feedback">
+                  Veuillez sélectionner une catégorie pour votre message.
+                </div>
+              </div>
+
+              <!-- Priority -->
+              <div class="col-md-6 mb-3">
+                <label for="priority" class="form-label">
+                  <strong>Priorité</strong> <span class="text-danger">*</span>
+                </label>
+                <select
+                  id="priority"
+                  class="form-select"
+                  [class.is-invalid]="
+                    complaintForm.get('priority')?.invalid &&
+                    (complaintForm.get('priority')?.dirty || submitted)
+                  "
+                  [class.is-valid]="
+                    complaintForm.get('priority')?.valid &&
+                    (complaintForm.get('priority')?.dirty || submitted)
+                  "
+                  formControlName="priority"
+                >
+                  <option value="" disabled>Sélectionnez une priorité</option>
+                  <option
+                    *ngFor="let priority of priorityLevels"
+                    [value]="priority.value"
+                  >
+                    {{ priority.label }}
+                  </option>
+                </select>
+                <div class="invalid-feedback">
+                  Veuillez sélectionner un niveau de priorité.
+                </div>
+              </div>
+
+              <!-- Subject -->
+              <div class="col-12 mb-3">
+                <label for="subject" class="form-label">
+                  <strong>Objet</strong> <span class="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="subject"
+                  class="form-control"
+                  [class.is-invalid]="
+                    f['subject'].invalid && (f['subject'].dirty || submitted)
+                  "
+                  [class.is-valid]="
+                    f['subject'].valid && (f['subject'].dirty || submitted)
+                  "
+                  formControlName="subject"
+                  placeholder="Résumé de votre demande"
+                  maxlength="200"
+                />
+                <div class="invalid-feedback">
+                  <div *ngIf="f['subject'].errors?.['required']">
+                    L'objet est requis.
+                  </div>
+                  <div *ngIf="f['subject'].errors?.['minlength']">
+                    L'objet doit comporter au moins 5 caractères.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="col-12 mb-3">
+                <label for="description" class="form-label">
+                  <strong>Description</strong>
+                  <span class="text-danger">*</span>
+                </label>
+                <textarea
+                  id="description"
+                  class="form-control"
+                  [class.is-invalid]="
+                    f['description'].invalid &&
+                    (f['description'].dirty || submitted)
+                  "
+                  [class.is-valid]="
+                    f['description'].valid &&
+                    (f['description'].dirty || submitted)
+                  "
+                  formControlName="description"
+                  placeholder="Veuillez fournir des informations détaillées sur votre demande..."
+                  rows="6"
+                  maxlength="2000"
+                ></textarea>
+                <div class="invalid-feedback">
+                  <div *ngIf="f['description'].errors?.['required']">
+                    La description est requise.
+                  </div>
+                  <div *ngIf="f['description'].errors?.['minlength']">
+                    La description doit comporter au moins 20 caractères.
+                  </div>
+                </div>
+                <div class="form-text">
+                  <i class="bi bi-chat-left-dots me-1"></i>
+                  Soyez le plus précis possible afin de nous aider à mieux vous
+                  assister.
+                </div>
+              </div>
+            </div>
+
+            <!-- File Attachments Section -->
+            <div class="row mb-4">
+              <h5 class="text-secondary mb-3">
+                <i class="bi bi-paperclip me-2"></i>
+                Pièces jointes <span class="text-muted">(Optionnel)</span>
+              </h5>
+
+              <div class="col-12">
+                <div
+                  class="border border-2 border-dashed rounded p-4 text-center"
+                >
+                  <input
+                    type="file"
+                    id="attachments"
+                    class="d-none"
+                    multiple
+                    accept=".jpg,.jpeg,.png,.gif,.pdf,.txt"
+                    (change)="onFileSelect($event)"
+                  />
+
+                  <div *ngIf="selectedFiles.length === 0">
+                    <i class="bi bi-cloud-upload display-4 text-muted mb-3"></i>
+                    <p class="text-muted mb-2">
+                      <strong>Cliquez pour télécharger des fichiers</strong> ou
+                      glissez-déposez
+                    </p>
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary"
+                      (click)="triggerFileInput($event)"
+                    >
+                      <i class="bi bi-plus-circle me-2"></i>
+                      Sélectionner des fichiers
+                    </button>
+                    <p class="text-muted small mt-2 mb-0">
+                      Formats supportés : JPG, PNG, GIF, PDF, TXT (Max 5Mo
+                      chacun)
+                    </p>
+                  </div>
+
+                  <!-- Selected Files Display -->
+                  <div *ngIf="selectedFiles.length > 0" class="text-start">
+                    <div
+                      class="d-flex justify-content-between align-items-center mb-3"
+                    >
+                      <h6 class="mb-0">
+                        Fichiers sélectionnés ({{ selectedFiles.length }})
+                      </h6>
+                      <button
+                        type="button"
+                        class="btn btn-outline-primary btn-sm"
+                        (click)="triggerFileInput($event)"
+                      >
+                        <i class="bi bi-plus-circle me-1"></i>
+                        Ajouter
+                      </button>
+                    </div>
+
+                    <div class="row g-2">
+                      <div
+                        *ngFor="let file of selectedFiles; let i = index"
+                        class="col-md-6"
+                      >
+                        <div class="card h-100">
+                          <div class="card-body p-3">
+                            <div class="d-flex align-items-center">
+                              <i
+                                class="{{
+                                  getFileIcon(file)
+                                }} text-primary me-2"
+                              ></i>
+                              <div class="flex-grow-1 text-truncate">
+                                <div
+                                  class="fw-medium text-truncate"
+                                  [title]="file.name"
+                                >
+                                  {{ file.name }}
+                                </div>
+                                <small class="text-muted">{{
+                                  formatFileSize(file.size)
+                                }}</small>
+                              </div>
+                              <button
+                                type="button"
+                                class="btn btn-outline-danger btn-sm ms-2"
+                                (click)="removeFile(i)"
+                                [title]="'Supprimer ' + file.name"
+                              >
+                                <i class="bi bi-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Informations de support -->
+            <div class="row mb-4">
+              <div class="col-12">
+                <div class="card bg-light">
+                  <div class="card-body">
+                    <h6 class="card-title text-primary">
+                      <i class="bi bi-headset me-2"></i>
+                      Besoin d'aide immédiate ?
+                    </h6>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <p class="card-text mb-2">
+                          Pour les urgences, vous pouvez également nous
+                          contacter directement :
+                        </p>
+                        <div class="d-flex flex-wrap gap-3">
+                          <div
+                            *ngFor="let email of adminSupportEmails.slice(0, 2)"
+                            class="d-flex align-items-center"
+                          >
+                            <i
+                              class="bi bi-envelope-fill text-primary me-2"
+                            ></i>
+                            <a
+                              [href]="'mailto:' + email"
+                              class="text-decoration-none"
+                              >{{ email }}</a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 text-md-end">
+                        <small class="text-muted">
+                          <i class="bi bi-clock me-1"></i>
+                          Délai de réponse : 24-48 heures
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="row">
+              <div class="col-12">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-lg px-5"
+                    [disabled]="loading || complaintForm.invalid"
+                  >
+                    <output
+                      *ngIf="loading"
+                      class="spinner-border spinner-border-sm me-2"
+                    ></output>
+                    <i *ngIf="!loading" class="bi bi-send me-2"></i>
+                    {{ loading ? "Envoi en cours..." : "Envoyer le message" }}
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary btn-lg px-5"
+                    (click)="complaintForm.reset()"
+                    [disabled]="loading"
+                  >
+                    <i class="bi bi-arrow-clockwise me-2"></i>
+                    Réinitialiser le formulaire
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Informations complémentaires -->
+      <div class="row mt-5">
+        <div class="col-md-4 mb-4">
+          <div class="text-center">
+            <div
+              class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+              style="width: 60px; height: 60px"
+            >
+              <i class="bi bi-clock-history fs-4"></i>
+            </div>
+            <h5>Réponse rapide</h5>
+            <p class="text-muted">
+              Nous répondons généralement sous 24 à 48 heures les jours
+              ouvrables.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+          <div class="text-center">
+            <div
+              class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+              style="width: 60px; height: 60px"
+            >
+              <i class="bi bi-shield-check fs-4"></i>
+            </div>
+            <h5>Sécurisé & Privé</h5>
+            <p class="text-muted">
+              Vos informations sont protégées et ne seront utilisées que pour
+              traiter votre demande.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+          <div class="text-center">
+            <div
+              class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+              style="width: 60px; height: 60px"
+            >
+              <i class="bi bi-people fs-4"></i>
+            </div>
+            <h5>Support expert</h5>
+            <p class="text-muted">
+              Notre équipe dédiée est là pour résoudre vos préoccupations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

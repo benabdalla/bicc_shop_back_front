@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: bbc-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: bbc_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    container_name: bbc-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/bbc_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    restart: always
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile-frontend
+    container_name: bbc-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  db_data:

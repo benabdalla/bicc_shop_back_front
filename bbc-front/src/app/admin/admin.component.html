@@ -1,0 +1,187 @@
+<!--sidebar wrapper -->
+<div class="sidebar-wrapper mybg1" data-simplebar="true">
+  <div class="sidebar-header mybg1">
+    <div class="logo-icon">
+         <img src="favicon.ico" class="logo-icon" alt="logo icon">
+      </div>
+    <div>
+      <a routerLink="">
+       <!-- <img src="favicon.ico" alt="logo" height="60px"> -->
+      </a>
+    </div>
+  </div>
+  <!--navigation-->
+  <ul class="metismenu" id="menu">
+    <li class="mm-active">
+      <a routerLink=".">
+        <div class="parent-icon"><i class="bx bx-home-alt"></i></div>
+        <div class="menu-title">Tableau de bord</div>
+      </a>
+    </li>
+    <li class="menu-label">Produits</li>
+    <li>
+      <a routerLink="products">
+        <div class="parent-icon"><i class="bx bx-package"></i></div>
+        <div class="menu-title">Produits</div>
+      </a>
+    </li>
+    <li>
+      <a routerLink="categories">
+        <div class="parent-icon"><i class="bx bx-category"></i></div>
+        <div class="menu-title">Catégories</div>
+      </a>
+    </li>
+    <li>
+      <a routerLink="coupons">
+        <div class="parent-icon"><i class="bx bxs-discount"></i></div>
+        <div class="menu-title">Coupons</div>
+      </a>
+    </li>
+    <li class="menu-label">Vendeurs</li>
+    <li>
+      <a routerLink="sellers">
+        <div class="parent-icon"><i class="bx bx-user-check"></i></div>
+        <div class="menu-title">Vendeurs</div>
+      </a>
+    </li>
+    <!-- <li>
+            <a routerLink="withdraw">
+                <div class="parent-icon"><i class='bx bx-wallet'></i>
+                </div>
+                <div class="menu-title">Withdraw</div>
+            </a>
+        </li> -->
+    <li class="menu-label">Clients</li>
+    <li>
+      <a routerLink="customers">
+        <div class="parent-icon"><i class="bx bx-street-view"></i></div>
+        <div class="menu-title">Clients</div>
+      </a>
+    </li>
+    <li class="menu-label">Logistique</li>
+    <li>
+      <a routerLink="orders">
+        <div class="parent-icon"><i class="bx bx-list-ul"></i></div>
+        <div class="menu-title">Commandes</div>
+      </a>
+    </li>
+    <li>
+      <a routerLink="orders/shipped">
+        <div class="parent-icon"><i class="bx bxs-truck"></i></div>
+        <div class="menu-title">Prêt à livrer</div>
+      </a>
+    </li>
+    <li>
+      <a routerLink="collection">
+        <div class="parent-icon"><i class="bx bx-store-alt"></i></div>
+        <div class="menu-title">Points de collecte</div>
+      </a>
+    </li>
+    <li class="menu-label">Rapports</li>
+    <li>
+      <a routerLink="report">
+        <div class="parent-icon"><i class="bx bx-pie-chart-alt-2"></i></div>
+        <div class="menu-title">Rapports </div>
+      </a>
+    </li>
+    <li>
+      <a routerLink="report/sales">
+        <div class="parent-icon"><i class="bx bx-pie-chart-alt-2"></i></div>
+        <div class="menu-title">Rapport des ventes</div>
+      </a>
+    </li>
+  </ul>
+  <!--end navigation-->
+</div>
+<!--end sidebar wrapper -->
+<!--start header -->
+<header>
+  <div class="topbar d-flex align-items-center mybg1">
+    <nav class="navbar navbar-expand gap-3">
+      <div class="mobile-toggle-menu"><i class="bx bx-menu"></i></div>
+
+      <div class="top-menu ms-auto">
+        <ul class="navbar-nav align-items-center gap-1" style="padding: 20px">
+          <!--
+          <li class="nav-item dropdown dropdown-language d-none d-sm-flex">
+            <a
+              class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+              href="javascript:;"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                [src]="getCurrentLanguageFlag()"
+                width="22"
+                alt="Current Language"
+              />
+              <span class="ms-1 d-none d-md-inline text-white fs-6">{{
+                getCurrentLanguageName()
+              }}</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center py-2"
+                  href="javascript:;"
+                  (click)="changeLanguage('en')"
+                >
+                  <img
+                    src="assets/images/county/05.png"
+                    width="20"
+                    alt="English"
+                  />
+                  <span class="ms-1">English</span>
+                  <i
+                    class="bx bx-check ms-auto"
+                    *ngIf="currentLanguage === 'en'"
+                  ></i>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center py-2"
+                  href="javascript:;"
+                  (click)="changeLanguage('fr')"
+                >
+                  <img
+                    src="assets/images/county/04.png"
+                    width="20"
+                    alt="French"
+                  />
+                  <span class="ms-1">Français</span>
+                  <i
+                    class="bx bx-check ms-auto"
+                    *ngIf="currentLanguage === 'fr'"
+                  ></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          -->
+        </ul>
+      </div>
+      <div class="user-box dropdown">
+        <a class="d-flex align-items-center gap-3" routerLink=".">
+          <img
+            src="assets/images/avatars/avatar-8.png"
+            class="user-img"
+            alt="user avatar"
+          />
+          <div class="user-info">
+            <p class="user-name mb-0 text-white">{{ adminName }}</p>
+            <p class="designattion mb-0 text-white">ADMINISTRATEUR</p>
+          </div>
+        </a>
+      </div>
+      <div class="user-box dropdown px-3" (click)="onAdminLogout()">
+        Déconnexion
+      </div>
+    </nav>
+  </div>
+</header>
+<!--end header -->
+
+<div class="page-wrapper">
+  <router-outlet></router-outlet>
+</div>

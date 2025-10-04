@@ -1,0 +1,49 @@
+<div class="page-content">
+  <div class="d-flex align-items-end gap-3 mb-3">
+    <h3 class="m-0">Rapports </h3>
+    <div class="ms-auto">
+      <label>Du</label>
+      <input
+        class="form-control"
+        type="date"
+        name="startDate"
+        [(ngModel)]="startDate"
+      />
+    </div>
+    <div>
+      <label>Au</label>
+      <input
+        class="form-control"
+        type="date"
+        name="endDate"
+        [(ngModel)]="endDate"
+      />
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-4">
+          <button
+            (click)="onStockAlert()"
+            class="btn btn-primary w-100"
+            style="height: 80px"
+            type="button"
+          >
+            Rapport d'alerte stock
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            (click)="onTopSelling()"
+            class="btn btn-primary w-100"
+            style="height: 80px"
+            type="button"
+          >
+            Rapport meilleures ventes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

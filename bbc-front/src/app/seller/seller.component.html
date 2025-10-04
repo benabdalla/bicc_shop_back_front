@@ -1,0 +1,285 @@
+<!--sidebar wrapper -->
+<div class="sidebar-wrapper mybg2" data-simplebar="true">
+  <div class="sidebar-header mybg2">
+    <div class="d-flex align-items-center">
+      <div class="logo-icon">
+         <img src="favicon.ico" class="logo-icon" alt="logo icon">
+      </div>
+      <div class="ms-2">
+        <a routerLink="." class="text-decoration-none">
+          <div>
+
+    </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!--navigation-->
+  <ul class="metismenu" id="menu">
+    <li class="mm-active">
+      <a
+        routerLink="."
+        routerLinkActive="mm-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <div class="parent-icon">
+          <i class="bx bx-home-alt"></i>
+        </div>
+        <div class="menu-title">Tableau de bord</div>
+      </a>
+    </li>
+
+    <li class="menu-label">Gestion des produits</li>
+    <li>
+      <a routerLink="products" routerLinkActive="mm-active">
+        <div class="parent-icon">
+          <i class="bx bx-package"></i>
+        </div>
+        <div class="menu-title">Liste des produits</div>
+        <div class="menu-badge"></div>
+      </a>
+    </li>
+    <li>
+      <a routerLink="product" routerLinkActive="mm-active">
+        <div class="parent-icon">
+          <i class="bx bx-plus-circle"></i>
+        </div>
+        <div class="menu-title">Ajouter un produit</div>
+      </a>
+    </li>
+
+    <li class="menu-label">Gestion de la boutique</li>
+    <li>
+      <a routerLink="orders" routerLinkActive="mm-active">
+        <div class="parent-icon">
+          <i class="bx bx-list-ul"></i>
+        </div>
+        <div class="menu-title">Commandes</div>
+        <div class="menu-badge"></div>
+      </a>
+    </li>
+
+    <li class="menu-label">Rapports & Statistiques</li>
+    <li>
+      <a routerLink="report" routerLinkActive="mm-active">
+        <div class="parent-icon">
+          <i class="bx bx-pie-chart-alt-2"></i>
+        </div>
+        <div class="menu-title">Rapport </div>
+      </a>
+    </li>
+    <li>
+      <a routerLink="report/sales" routerLinkActive="mm-active">
+        <div class="parent-icon">
+          <i class="bx bx-line-chart"></i>
+        </div>
+        <div class="menu-title">Rapport des ventes</div>
+      </a>
+    </li>
+
+    <li class="menu-label">Paramètres du magasin</li>
+    <li>
+      <a routerLink="store" routerLinkActive="mm-active">
+        <div class="parent-icon">
+          <i class="bx bx-store"></i>
+        </div>
+        <div class="menu-title">Infos magasin</div>
+      </a>
+    </li>
+  </ul>
+  <!--end navigation-->
+</div>
+<!--end sidebar wrapper -->
+
+<!--start header -->
+<header>
+  <div class="topbar d-flex align-items-center mybg2">
+    <nav class="navbar navbar-expand gap-3">
+      <div class="top-menu ms-auto">
+        <ul class="navbar-nav align-items-center gap-1" style="padding: 20px">
+          <!--
+          <li class="nav-item dropdown dropdown-language d-none d-sm-flex">
+            <a
+              class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+              href="javascript:;"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                [src]="getCurrentLanguageFlag()"
+                width="22"
+                alt="Current Language"
+              />
+              <span class="ms-1 d-none d-md-inline text-white fs-6">{{
+                getCurrentLanguageName()
+              }}</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center py-2"
+                  href="javascript:;"
+                  (click)="changeLanguage('en')"
+                >
+                  <img
+                    src="assets/images/county/05.png"
+                    width="20"
+                    alt="English"
+                  />
+                  <span class="ms-1">English</span>
+                  <i
+                    class="bx bx-check ms-auto"
+                    *ngIf="currentLanguage === 'en'"
+                  ></i>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center py-2"
+                  href="javascript:;"
+                  (click)="changeLanguage('fr')"
+                >
+                  <img
+                    src="assets/images/county/04.png"
+                    width="20"
+                    alt="French"
+                  />
+                  <span class="ms-1">Français</span>
+                  <i
+                    class="bx bx-check ms-auto"
+                    *ngIf="currentLanguage === 'fr'"
+                  ></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          -->
+        </ul>
+      </div>
+
+      <!-- User Profile Dropdown -->
+      <div class="user-box dropdown px-3">
+        <a
+          class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret"
+          href="javascript:;"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            src="assets/images/avatars/avatar-4.png"
+            class="user-img"
+            alt="user avatar"
+          />
+          <div class="user-info">
+            <p class="user-name mb-0">{{ sellerName }}</p>
+            <p class="designattion mb-0">Vendeur</p>
+          </div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a
+              class="dropdown-item d-flex align-items-center"
+              routerLink="store"
+            >
+              <i class="bx bx-store fs-5"></i>
+              <span>Paramètres du magasin</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item d-flex align-items-center"
+              routerLink="orders"
+            >
+              <i class="bx bx-list-ul fs-5"></i>
+              <span>Mes commandes</span>
+            </a>
+          </li>
+          <li>
+            <div class="dropdown-divider mb-0"></div>
+          </li>
+          <li>
+            <a
+              class="dropdown-item d-flex align-items-center"
+              href="javascript:;"
+              (click)="onSellerLogout()"
+            >
+              <i class="bx bx-log-out-circle fs-5"></i>
+              <span>Déconnexion</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+<!--end header -->
+
+<!-- Main Content -->
+<div class="page-wrapper">
+  <div class="page-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<!-- Search Modal -->
+<div
+  class="modal fade"
+  id="SearchModal"
+  tabindex="-1"
+  aria-labelledby="SearchModalLabel"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down"
+  >
+    <div class="modal-content">
+      <div class="modal-header gap-2">
+        <div class="position-relative popup-search w-100">
+          <input
+            class="form-control form-control-lg ps-5 border-0 bg-transparent"
+            type="search"
+            placeholder="Rechercher..."
+            [(ngModel)]="searchQuery"
+          />
+          <span
+            class="position-absolute top-50 search-show ms-3 translate-middle-y start-0 top-50 fs-4"
+          >
+            <i class="bx bx-search"></i>
+          </span>
+        </div>
+        <button
+          type="button"
+          class="btn-close d-md-none"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="search-list">
+          <p class="mb-1">Recherches récentes</p>
+          <div class="list-group">
+            <a
+              href="javascript:;"
+              class="list-group-item list-group-item-action d-flex align-items-center gap-2 py-2"
+            >
+              <i class="bx bx-package fs-4"></i>Produits
+            </a>
+            <a
+              href="javascript:;"
+              class="list-group-item list-group-item-action d-flex align-items-center gap-2 py-2"
+            >
+              <i class="bx bx-list-ul fs-4"></i>Commandes
+            </a>
+            <a
+              href="javascript:;"
+              class="list-group-item list-group-item-action d-flex align-items-center gap-2 py-2"
+            >
+              <i class="bx bx-pie-chart-alt-2 fs-4"></i>Rapports
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,136 @@
+<div class="page-content">
+  <div class="d-flex align-items-end gap-3 mb-3">
+    <h3 class="m-0">Rapports </h3>
+    <div class="ms-auto">
+      <label>ID</label>
+      <input
+        class="form-control"
+        type="text"
+        name="findById"
+        [(ngModel)]="findById"
+      />
+    </div>
+    <div>
+      <label>Du</label>
+      <input
+        class="form-control"
+        type="date"
+        name="startDate"
+        [(ngModel)]="startDate"
+      />
+    </div>
+    <div>
+      <label>Au</label>
+      <input
+        class="form-control"
+        type="date"
+        name="endDate"
+        [(ngModel)]="endDate"
+      />
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5>Rapports administrateur</h5>
+      <div class="row g-3">
+        <div class="col-4">
+          <button
+            (click)="onVendorSales()"
+            class="btn btn-primary w-100"
+            style="height: 80px"
+            type="button"
+          >
+            Ventes par vendeur
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            (click)="onAdminProfit()"
+            class="btn btn-primary w-100"
+            style="height: 80px"
+            type="button"
+          >
+            Profits administrateur
+          </button>
+        </div>
+      </div>
+      <h5 class="mt-4">Rapports vendeur</h5>
+      <div class="row g-3">
+        <div class="col-4">
+          <button
+            (click)="onSellerReport()"
+            class="btn btn-primary w-100"
+            style="height: 80px"
+            type="button"
+          >
+            Rapport de tous les vendeurs
+          </button>
+        </div>
+        <div class="col-4">
+          <!--<button
+            class="btn btn-primary w-100"
+            style="height: 80px"
+            type="button"
+          >
+            Ventes vendeur
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            class="btn btn-primary w-100"
+            style="height: 80px"
+            type="button"
+          >
+            Retraits vendeur
+          </button>-->
+        </div>
+      </div>
+      <h5 class="mt-4">Rapports client</h5>
+      <div class="row g-3">
+        <div class="col-4">
+          <button
+            (click)="onCustomerReport()"
+            class="btn btn-primary w-100"
+            style="height: 80px"
+            type="button"
+          >
+            Rapport de tous les clients
+          </button>
+        </div>
+        <div class="col-4">
+          <!--<button
+            (click)="onCustomerOrders()"
+            class="btn btn-primary w-100"
+            style="height: 80px"
+            type="button"
+          >
+            Rapport client par ID
+          </button>-->
+        </div>
+      </div>
+      <h5 class="mt-4">Rapports produit</h5>
+      <div class="row g-3">
+        <div class="col-4">
+          <button
+            (click)="onProductDetails()"
+            class="btn btn-primary w-100"
+            style="height: 80px"
+            type="button"
+          >
+            Détails du produit
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            (click)="onFavoriteItem()"
+            class="btn btn-primary w-100"
+            style="height: 80px"
+            type="button"
+          >
+            Classement des articles favoris
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

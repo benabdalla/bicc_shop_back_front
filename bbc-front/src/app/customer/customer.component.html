@@ -1,0 +1,89 @@
+<header>
+  <div class="topbar d-flex align-items-center">
+    <nav class="navbar navbar-expand gap-3">
+      <a routerLink=""><h1 class="fs-2 m-0">BICC</h1></a>
+      <div class="user-box dropdown px-3 ms-auto">
+        <div class="d-flex align-items-center gap-3">
+          <img
+            src="assets/images/avatars/avatar-1.png"
+            class="user-img"
+            alt="user avatar"
+          />
+          <div class="user-info">
+            <p class="user-name mb-0">{{ customerName }}</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+<div class="page-wrapper">
+  <div class="container">
+    <div class="main-body">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex flex-column align-items-center text-center">
+                <img
+                  src="assets/images/avatars/avatar-1.png"
+                  alt="Admin"
+                  class="rounded-circle p-1 bg-primary"
+                  width="110"
+                />
+                <h4 class="mt-3">{{ customerName }}</h4>
+              </div>
+              <div class="btn-group-vertical w-100 mt-3">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-lg"
+                  routerLink="."
+                >
+                  <i class="bi bi-person-circle me-2"></i>Profil
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-lg"
+                  routerLink="wishlist"
+                >
+                  <i class="bi bi-heart me-2"></i>Favoris
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-lg"
+                  routerLink="orders"
+                >
+                  <i class="bi bi-bag-check me-2"></i>Commandes
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-lg"
+                  routerLink="addresses"
+                >
+                  <i class="bi bi-geo-alt me-2"></i>Adresses
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-lg"
+                  routerLink="contact-us"
+                >
+                  <i class="bi bi-headset me-2"></i>Contact
+                </button>
+                <button
+                  (click)="onCustomerLogout()"
+                  type="button"
+                  class="btn btn-outline-danger btn-lg"
+                >
+                  <i class="bi bi-box-arrow-right me-2"></i>Déconnexion
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

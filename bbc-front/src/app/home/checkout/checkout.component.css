@@ -1,0 +1,463 @@
+/* Main Container */
+.page-content {
+  background: linear-gradient(135deg, #f8f9ff 0%, #e8f0fe 100%);
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+.page-wrapper {
+  position: relative;
+}
+
+/* Checkout Section */
+.checkout-page {
+  position: relative;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Form Styling */
+form {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Section Headers */
+.from-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.from-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+/* Left Column - Form Section */
+.col-lg-8 {
+  padding: 40px 50px;
+  border-right: 1px solid #e2e8f0;
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+}
+
+/* Right Column - Order Summary */
+.col-lg-4 {
+  padding: 40px 30px;
+  background: linear-gradient(145deg, #f8fafc 0%, #ffffff 100%);
+  position: relative;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+  padding: 16px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: #ffffff;
+  color: #2d3748;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.form-control:focus, .form-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
+}
+
+.form-control::placeholder {
+  color: #a0aec0;
+  font-weight: 400;
+}
+
+/* Section Titles */
+h5, h6 {
+  color: #4a5568;
+  font-weight: 600;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+/* Radio Buttons for Shipping */
+.form-check-inline {
+  margin-right: 20px;
+}
+
+.btn-check + .btn {
+  background: #f7fafc;
+  border: 2px solid #e2e8f0;
+  color: #4a5568;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-check + .btn:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-check + .btn:hover:before {
+  left: 100%;
+}
+
+.btn-check + .btn:hover {
+  border-color: #667eea;
+  color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+}
+
+.btn-check:checked + .btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-color: #667eea;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Textarea */
+textarea.form-control {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+/* Order Summary Table */
+.package-summary {
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.package-summary table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+}
+
+.package-summary td {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.package-summary td:last-child {
+  text-align: right;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.package-summary tr:last-child td {
+  border-bottom: none;
+  font-size: 18px;
+  font-weight: 700;
+  color: #2d3748;
+  padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+}
+
+/* Coupon Section */
+.coupon-section {
+  background: linear-gradient(145deg, #f0f7ff, #e6f3ff);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+/* Payment Method */
+.payment-section {
+  background: linear-gradient(145deg, #fff5f5, #fef2f2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(239, 68, 68, 0.1);
+}
+
+/* Card Details */
+.card-details {
+  background: linear-gradient(145deg, #f8fafc, #ffffff);
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+/* Primary Button */
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 18px 30px;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover:before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px);
+}
+
+/* Outline Button */
+.btn-outline-primary {
+  border: 2px solid #667eea;
+  color: #667eea;
+  background: transparent;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+      width: 110px !important;
+}
+
+.btn-outline-primary:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.2);
+}
+
+/* Delivery Date Section */
+.delivery-info {
+  background: linear-gradient(145deg, #f0fff4, #e6fffa);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-left: 4px solid #22c55e;
+}
+
+.delivery-info p {
+  margin: 0 0 15px 0;
+  color: #065f46;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .col-lg-8 {
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 30px 25px;
+  }
+
+  .col-lg-4 {
+    padding: 30px 25px;
+  }
+
+  .from-title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .col-lg-8, .col-lg-4 {
+    padding: 20px;
+  }
+
+  .form-control, .form-select {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .btn-primary {
+    padding: 16px 25px;
+    font-size: 15px;
+  }
+
+  .package-summary {
+    padding: 20px;
+  }
+
+  .from-title {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-content {
+    padding: 20px 0;
+  }
+
+  .form-check-inline {
+    display: block;
+    margin: 10px 0;
+  }
+
+  .btn-check + .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading State */
+.loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Success/Error States */
+.success-message {
+  background: linear-gradient(145deg, #dcfce7, #bbf7d0);
+  color: #065f46;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin: 15px 0;
+  border: 1px solid #22c55e;
+}
+
+.error-message {
+  background: linear-gradient(145deg, #fef2f2, #fecaca);
+  color: #991b1b;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin: 15px 0;
+  border: 1px solid #ef4444;
+}
+
+/* Order Summary Animations */
+.package-summary tr {
+  transition: all 0.3s ease;
+}
+
+.package-summary tr:hover {
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 8px;
+}
+
+/* Form Validation States */
+.form-control.is-valid {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
+}
+
+.form-control.is-invalid {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
+}

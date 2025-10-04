@@ -1,0 +1,423 @@
+<div class="contact-us-container">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <!-- Header -->
+        <div class="text-center mb-5">
+          <div class="contact-icon mb-3">
+            <i class="bi bi-headset display-4 text-primary"></i>
+          </div>
+          <h1 class="h2 mb-3">Contactez-nous</h1>
+          <p class="text-muted">
+            Nous sommes là pour vous aider ! Soumettez votre réclamation ou
+            votre avis et nous vous répondrons dans les plus brefs délais.
+          </p>
+        </div>
+
+        <!-- Success Message -->
+        <div
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+          *ngIf="successMessage"
+        >
+          <i class="bi bi-check-circle-fill me-2"></i>
+          {{ successMessage }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+          ></button>
+        </div>
+
+        <!-- Error Message -->
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+          *ngIf="errorMessage"
+        >
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          {{ errorMessage }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+          ></button>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form-card">
+          <form
+            [formGroup]="complaintForm"
+            (ngSubmit)="onSubmit()"
+            class="needs-validation"
+            novalidate
+          >
+            <!-- Personal Information -->
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <label for="customerName" class="form-label"
+                  >Nom complet <span class="text-danger">*</span></label
+                >
+                <div class="input-group">
+                  <span class="input-group-text"
+                    ><i class="bi bi-person"></i
+                  ></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="customerName"
+                    formControlName="customerName"
+                    [class.is-invalid]="submitted && f['customerName'].errors"
+                    placeholder="Entrez votre nom complet"
+                  />
+                </div>
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && f['customerName'].errors"
+                >
+                  <div *ngIf="f['customerName'].errors?.['required']">
+                    Le nom complet est requis
+                  </div>
+                  <div *ngIf="f['customerName'].errors?.['minlength']">
+                    Le nom doit comporter au moins 2 caractères
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="customerEmail" class="form-label"
+                  >Adresse e-mail <span class="text-danger">*</span></label
+                >
+                <div class="input-group">
+                  <span class="input-group-text"
+                    ><i class="bi bi-envelope"></i
+                  ></span>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="customerEmail"
+                    formControlName="customerEmail"
+                    [class.is-invalid]="submitted && f['customerEmail'].errors"
+                    placeholder="Entrez votre adresse e-mail"
+                  />
+                </div>
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && f['customerEmail'].errors"
+                >
+                  <div *ngIf="f['customerEmail'].errors?.['required']">
+                    L'adresse e-mail est requise
+                  </div>
+                  <div *ngIf="f['customerEmail'].errors?.['email']">
+                    Veuillez entrer une adresse e-mail valide
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customer Address -->
+            <div class="mb-4">
+              <label for="customerAddress" class="form-label"
+                >Adresse (optionnel)</label
+              >
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="bi bi-geo-alt"></i
+                ></span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="customerAddress"
+                  formControlName="customerAddress"
+                  placeholder="Entrez votre adresse (optionnel)"
+                />
+              </div>
+              <div class="form-text">
+                Cela nous aide à mieux vous assister et à accélérer le
+                traitement.
+              </div>
+            </div>
+
+            <!-- Subject -->
+            <div class="mb-4">
+              <label for="subject" class="form-label"
+                >Objet <span class="text-danger">*</span></label
+              >
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="bi bi-chat-left-text"></i
+                ></span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="subject"
+                  formControlName="subject"
+                  [class.is-invalid]="submitted && f['subject'].errors"
+                  placeholder="Résumé de votre demande"
+                />
+              </div>
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && f['subject'].errors"
+              >
+                <div *ngIf="f['subject'].errors?.['required']">
+                  L'objet est requis
+                </div>
+                <div *ngIf="f['subject'].errors?.['minlength']">
+                  L'objet doit comporter au moins 5 caractères
+                </div>
+              </div>
+            </div>
+
+            <!-- Category and Priority -->
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <label for="category" class="form-label"
+                  >Catégorie <span class="text-danger">*</span></label
+                >
+                <div class="input-group">
+                  <span class="input-group-text"
+                    ><i class="bi bi-tags"></i
+                  ></span>
+                  <select
+                    class="form-select"
+                    id="category"
+                    formControlName="category"
+                    [class.is-invalid]="submitted && f['category'].errors"
+                  >
+                    <option value="" disabled>
+                      Sélectionnez une catégorie
+                    </option>
+                    <option value="demande-info">Demande d'information</option>
+                    <option value="reclamation">Réclamation</option>
+                    <option value="suggestion">Suggestion</option>
+                    <option value="technique">Problème technique</option>
+                    <option value="commande">Commande</option>
+                    <option value="livraison">Livraison</option>
+                    <option value="autre">Autre</option>
+                  </select>
+                </div>
+                <div
+                  class="invalid-feedback"
+                  *ngIf="submitted && f['category'].errors"
+                >
+                  <div *ngIf="f['category'].errors?.['required']">
+                    Veuillez sélectionner une catégorie
+                  </div>
+                  <div *ngIf="f['category'].errors?.['required']">
+                    Veuillez sélectionner une catégorie
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="priority" class="form-label"
+                  >Priorité <span class="text-danger">*</span></label
+                >
+                <label for="priority" class="form-label"
+                  >Priorité <span class="text-danger">*</span></label
+                >
+                <div class="input-group">
+                  <span class="input-group-text"
+                    ><i class="bi bi-flag"></i
+                  ></span>
+                  <select
+                    class="form-select"
+                    id="priority"
+                    formControlName="priority"
+                    [class.is-invalid]="submitted && f['priority'].errors"
+                  >
+                    <option
+                      *ngFor="let priority of complaintPriorities"
+                      [value]="priority.value"
+                    >
+                      {{ priority.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+              <label for="description" class="form-label"
+                >Description <span class="text-danger">*</span></label
+              >
+              <textarea
+                class="form-control"
+                id="description"
+                formControlName="description"
+                [class.is-invalid]="submitted && f['description'].errors"
+                rows="6"
+                placeholder="Veuillez fournir des informations détaillées sur votre demande..."
+              ></textarea>
+              <div
+                class="invalid-feedback"
+                *ngIf="submitted && f['description'].errors"
+              >
+                <div *ngIf="f['description'].errors?.['required']">
+                  La description est requise
+                </div>
+                <div *ngIf="f['description'].errors?.['minlength']">
+                  La description doit comporter au moins 20 caractères
+                </div>
+              </div>
+              <div class="form-text">
+                Minimum 20 caractères. Plus vous fournissez de détails, mieux
+                nous pourrons vous aider.
+              </div>
+            </div>
+
+            <!-- File Attachments -->
+            <div class="mb-4">
+              <label for="attachments" class="form-label"
+                >Pièces jointes (optionnel)</label
+              >
+              <div
+                class="file-upload-area"
+                (dragover)="$event.preventDefault()"
+                (drop)="$event.preventDefault(); onFileSelect($event)"
+              >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="attachments"
+                  multiple
+                  accept=".jpg,.jpeg,.png,.gif,.pdf,.txt"
+                  (change)="onFileSelect($event)"
+                  style="display: none"
+                />
+                <div class="text-center py-4">
+                  <i class="bi bi-cloud-upload display-6 text-muted"></i>
+                  <p class="mb-2">
+                    Glissez-déposez les fichiers ici ou
+                    <a
+                      href="#"
+                      (click)="triggerFileInput($event)"
+                      class="text-primary"
+                      >parcourir les fichiers</a
+                    >
+                  </p>
+                  <small class="text-muted"
+                    >Formats supportés : JPG, PNG, GIF, PDF, TXT (Max 5Mo
+                    chacun)</small
+                  >
+                </div>
+              </div>
+
+              <!-- Selected Files List -->
+              <div *ngIf="selectedFiles.length > 0" class="selected-files mt-3">
+                <h6 class="mb-2">Fichiers sélectionnés :</h6>
+                <div class="file-list">
+                  <div
+                    *ngFor="let file of selectedFiles; let i = index"
+                    class="file-item d-flex align-items-center justify-content-between p-2 border rounded mb-2"
+                  >
+                    <div class="d-flex align-items-center">
+                      <i
+                        [class]="getFileIcon(file)"
+                        class="me-2 text-primary"
+                      ></i>
+                      <div>
+                        <div class="file-name">{{ file.name }}</div>
+                        <small class="text-muted">{{
+                          formatFileSize(file.size)
+                        }}</small>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="removeFile(i)"
+                    >
+                      <i class="bi bi-x"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+              <button
+                type="submit"
+                class="btn btn-primary btn-lg px-5"
+                [disabled]="loading"
+              >
+                <span
+                  *ngIf="loading"
+                  class="spinner-border spinner-border-sm me-2"
+                ></span>
+                <i *ngIf="!loading" class="bi bi-send me-2"></i>
+                {{ loading ? "Envoi en cours..." : "Envoyer le message" }}
+              </button>
+            </div>
+
+            <!-- Help Text -->
+            <div class="text-center mt-3">
+              <small class="text-muted">
+                Votre demande sera traitée sous 24 à 48 heures. Vous recevrez
+                des mises à jour par email sur l'avancement.
+              </small>
+            </div>
+          </form>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="row mt-5">
+          <div class="col-md-4 text-center mb-4">
+            <div class="contact-info-item">
+              <i class="bi bi-telephone-fill text-primary display-6 mb-3"></i>
+              <h5>Assistance téléphonique</h5>
+              <p class="text-muted">+216 52 402 004</p>
+              <small class="text-muted">Lun-Ven 9h-18h</small>
+            </div>
+          </div>
+          <div class="col-md-4 text-center mb-4">
+            <div class="contact-info-item">
+              <i class="bi bi-envelope-fill text-primary display-6 mb-3"></i>
+              <h5>Assistance par email</h5>
+
+              <!-- Primary Support Email -->
+              <div *ngIf="primarySupportEmail">
+                <p class="text-muted mb-2">
+                  <a
+                    [href]="'mailto:' + primarySupportEmail"
+                    class="text-decoration-none"
+                  >
+                    {{ primarySupportEmail }}
+                  </a>
+                </p>
+              </div>
+
+              <!-- Additional Admin Emails -->
+              <div
+                *ngIf="adminSupportEmails.length > 1"
+                class="admin-emails mt-2"
+              >
+                <small class="text-muted d-block mb-1"
+                  >Support supplémentaire :</small
+                >
+                <div
+                  *ngFor="
+                    let email of adminSupportEmails.slice(1);
+                    let i = index
+                  "
+                  class="mb-1"
+                >
+                  <small class="text-muted">
+                    <a [href]="'mailto:' + email" class="text-decoration-none">
+                      {{ email }}
+                    </a>
+                  </small>
+                </div>
+              </div>
+
+              <small class="text-muted d-block mt-2">Réponse sous 24h</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,161 @@
+<div class="page-content">
+  <h3>Détails de la commande</h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex">
+        <p>
+          ID commande : <strong>#{{ order.id }}</strong>
+        </p>
+        <p class="ms-auto">
+          Passée le : <strong>{{ order.orderDate }}</strong>
+        </p>
+      </div>
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Nom du produit</th>
+              <th>Prix unitaire</th>
+              <th>Quantité</th>
+              <th>Sous-total</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of orderDetails; let i = index">
+              <td>
+                <h6 class="mb-0 font-14">{{ p.productName }}</h6>
+              </td>
+              <td>{{ p.productUnitPrice }}</td>
+              <td>{{ p.quantity }}</td>
+              <td>{{ p.subTotal }}</td>
+              <td>
+                <div
+                  [class]="
+                    p.status == 'Pending'
+                      ? 'text-warning bg-light-warning'
+                      : p.status == 'Canceled'
+                      ? 'text-danger bg-light-danger'
+                      : p.status == 'Processing'
+                      ? 'text-info bg-light-info'
+                      : p.status == 'Shipped'
+                      ? 'text-primary bg-light-primary'
+                      : p.status == 'Delivered'
+                      ? 'text-success bg-light-success'
+                      : p.status == 'Refunded'
+                      ? 'text-secondary bg-light-secondary'
+                      : 'text-primary bg-light-primary'
+                  "
+                  class="badge rounded-pill p-2 text-uppercase px-3"
+                >
+                  <i class="bx bxs-circle me-1"></i>{{ p.status | statusFr }}
+                </div>
+              </td>
+              <td>
+                <select
+                  #_status
+                  class="form-select"
+                  name="actions"
+                  id="actions"
+                  (change)="onStatusChange(i, _status.value)"
+                  [disabled]="
+                    p.status == 'Shipped' ||
+                    p.status == 'Delivered' ||
+                    p.status == 'Refunded'
+                  "
+                >
+                  <option [selected]="p.status == 'Pending'" value="Pending">
+                    En attente
+                  </option>
+                  <option [selected]="p.status == 'Canceled'" value="Canceled">
+                    Annulée
+                  </option>
+                  <option
+                    [selected]="p.status == 'Processing'"
+                    value="Processing"
+                  >
+                    En traitement
+                  </option>
+                  <option [selected]="p.status == 'Shipped'" value="Shipped">
+                    Expédiée
+                  </option>
+                  <option
+                    *ngIf="p.status == 'Delivered'"
+                    [selected]="p.status == 'Delivered'"
+                    value="Delivered"
+                  >
+                    Livrée
+                  </option>
+                  <option
+                    *ngIf="p.status == 'Refunded'"
+                    [selected]="p.status == 'Refunded'"
+                    value="Refunded"
+                  >
+                    Remboursée
+                  </option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <h5>Adresse de livraison</h5>
+          <hr />
+          <p>Adresse : {{ order.shippingStreet }}</p>
+          <p>Code postal : {{ order.shippingPostCode }}</p>
+          <p>District : {{ order.shippingCity }}</p>
+          <p>Région : {{ order.shippingState }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <h5>Résumé de la commande</h5>
+          <hr />
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <th>Sous-total</th>
+                <td class="text-end">{{ order.subTotal.toFixed(2) }}TND</td>
+              </tr>
+              <tr>
+                <th>Frais de livraison</th>
+                <td class="text-end">
+                  {{ order.shippingCharge.toFixed(2) }}TND
+                </td>
+              </tr>
+              <tr>
+                <th>Frais de passerelle</th>
+                <td class="text-end">{{ order.gatewayFee.toFixed(2) }}TND</td>
+              </tr>
+              <tr>
+                <th>Taxe (5%)</th>
+                <td class="text-end">{{ order.tax.toFixed(2) }}TND</td>
+              </tr>
+              <tr>
+                <th>Remise</th>
+                <td class="text-end">{{ order.discount.toFixed(2) }}TND</td>
+              </tr>
+              <tr>
+                <th>Total</th>
+                <td class="text-end">
+                  <strong>{{ order.orderTotal.toFixed(2) }}TND</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <p>Payé par {{ order.paymentMethod }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

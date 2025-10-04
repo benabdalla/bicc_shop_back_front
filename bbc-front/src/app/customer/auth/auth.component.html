@@ -1,0 +1,399 @@
+<div class="auth-wrapper">
+  <div class="auth-container">
+    <!-- Background Elements -->
+    <div class="auth-bg-elements">
+      <div class="floating-shape shape-1"></div>
+      <div class="floating-shape shape-2"></div>
+      <div class="floating-shape shape-3"></div>
+    </div>
+
+    <!-- Sign In Form -->
+    <div *ngIf="signIn" class="auth-content sign-in-content">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="logo-container">
+            <img src="favicon.ico" alt="BICC" class="logo" />
+          </div>
+          <h2 class="auth-title">Bon retour !</h2>
+          <p class="auth-subtitle">Connectez-vous à votre espace personnel</p>
+        </div>
+
+        <form #_form1="ngForm" (submit)="onCustomerLogin(_form1)" class="auth-form">
+          <div class="form-group">
+            <label for="loginEmail" class="form-label">
+              <i class="bx bx-envelope"></i>
+              Adresse e-mail *
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="email"
+                class="form-control"
+                [class.is-valid]="loginEmail.valid && loginEmail.touched && isEmailFormatValid(loginEmail.value)"
+                [class.is-invalid]="(loginEmail.invalid && loginEmail.touched) || (loginEmail.value && !isEmailFormatValid(loginEmail.value))"
+                id="loginEmail"
+                placeholder="exemple@utilisateur.com"
+                name="email"
+                ngModel
+                required
+                email
+                #loginEmail="ngModel"
+                (blur)="checkEmailFormat(loginEmail.value)"
+              />
+              <div class="validation-icon" *ngIf="loginEmail.touched">
+                <i class="bx bx-check-circle" *ngIf="loginEmail.valid && isEmailFormatValid(loginEmail.value)"></i>
+                <i class="bx bx-error-circle" *ngIf="loginEmail.invalid || (loginEmail.value && !isEmailFormatValid(loginEmail.value))"></i>
+              </div>
+            </div>
+            <div class="validation-message" *ngIf="loginEmail.touched && (loginEmail.invalid || (loginEmail.value && !isEmailFormatValid(loginEmail.value)))">
+              <div *ngIf="loginEmail.errors?.['required']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                L'adresse e-mail est requise
+              </div>
+              <div *ngIf="loginEmail.errors?.['email'] || (loginEmail.value && !isEmailFormatValid(loginEmail.value))" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                Format d'e-mail invalide (ex: utilisateur@domaine.com)
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword" class="form-label">
+              <i class="bx bx-lock"></i>
+              Mot de passe *
+            </label>
+            <div class="password-field">
+              <input
+                [type]="showLoginPassword ? 'text' : 'password'"
+                class="form-control"
+                [class.is-valid]="loginPassword.valid && loginPassword.touched"
+                [class.is-invalid]="loginPassword.invalid && loginPassword.touched"
+                id="loginPassword"
+                placeholder="••••••••"
+                name="password"
+                ngModel
+                required
+                minlength="6"
+                #loginPassword="ngModel"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                (click)="toggleLoginPassword()"
+                [attr.aria-label]="showLoginPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+              >
+                <i [class]="showLoginPassword ? 'bx bx-show' : 'bx bx-hide'"></i>
+              </button>
+            </div>
+            <div class="validation-message" *ngIf="loginPassword.touched && loginPassword.invalid">
+              <div *ngIf="loginPassword.errors?.['required']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                Le mot de passe est requis
+              </div>
+              <div *ngIf="loginPassword.errors?.['minlength']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                Le mot de passe doit contenir au moins 6 caractères
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-options">
+              <label class="checkbox-container">
+                <input type="checkbox" id="rememberMe" name="rememberMe" ngModel />
+                <span class="checkmark"></span>
+                Se souvenir de moi
+              </label>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn-primary auth-btn"
+            [disabled]="_form1.invalid || isLoginLoading"
+            [class.loading]="isLoginLoading"
+          >
+            <span *ngIf="!isLoginLoading">Se connecter</span>
+            <span *ngIf="isLoginLoading">Connexion...</span>
+            <i class="bx bx-right-arrow-alt" *ngIf="!isLoginLoading"></i>
+            <i class="bx bx-loader-alt bx-spin" *ngIf="isLoginLoading"></i>
+          </button>
+
+          <!-- Form Validation Summary -->
+          <div class="form-validation-summary" *ngIf="_form1.submitted && _form1.invalid">
+            <div class="validation-summary-header">
+              <i class="bx bx-error-circle"></i>
+              <span>Veuillez corriger les erreurs suivantes :</span>
+            </div>
+            <ul class="validation-summary-list">
+              <li *ngIf="loginEmail.invalid">Adresse e-mail valide requise</li>
+              <li *ngIf="loginPassword.invalid">Mot de passe requis (min. 6 caractères)</li>
+            </ul>
+          </div>
+
+          <div class="auth-switch">
+            <p>Pas encore de compte ?</p>
+            <button type="button" class="switch-btn" (click)="signInToggle()">
+              Créer un compte
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div *ngIf="!signIn" class="auth-content sign-up-content">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="logo-container">
+            <img src="assets/images/logo-icon.png" alt="BICC" class="logo" />
+          </div>
+          <h2 class="auth-title">Créer un compte</h2>
+          <p class="auth-subtitle">Rejoignez-nous et découvrez nos services</p>
+        </div>
+
+        <form #_form2="ngForm" (submit)="onCustomerSignup(_form2)" class="auth-form">
+          <div class="form-group">
+            <label for="signupName" class="form-label">
+              <i class="bx bx-user"></i>
+              Nom complet *
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                class="form-control"
+                [class.is-valid]="signupName.valid && signupName.touched"
+                [class.is-invalid]="signupName.invalid && signupName.touched"
+                id="signupName"
+                placeholder="Entrez votre nom complet"
+                name="name"
+                ngModel
+                required
+                minlength="2"
+                maxlength="50"
+                pattern="^[a-zA-ZÀ-ÿ\s]+$"
+                #signupName="ngModel"
+              />
+              <div class="validation-icon" *ngIf="signupName.touched">
+                <i class="bx bx-check-circle" *ngIf="signupName.valid"></i>
+                <i class="bx bx-error-circle" *ngIf="signupName.invalid"></i>
+              </div>
+            </div>
+            <div class="validation-message" *ngIf="signupName.touched && signupName.invalid">
+              <div *ngIf="signupName.errors?.['required']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                Le nom complet est requis
+              </div>
+              <div *ngIf="signupName.errors?.['minlength']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                Le nom doit contenir au moins 2 caractères
+              </div>
+              <div *ngIf="signupName.errors?.['maxlength']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                Le nom ne peut pas dépasser 50 caractères
+              </div>
+              <div *ngIf="signupName.errors?.['pattern']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                Le nom ne peut contenir que des lettres et espaces
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signupEmail" class="form-label">
+              <i class="bx bx-envelope"></i>
+              Adresse e-mail *
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="email"
+                class="form-control"
+                [class.is-valid]="signupEmail.valid && signupEmail.touched && isEmailFormatValid(signupEmail.value) && !emailExists && !signupError"
+                [class.is-invalid]="(signupEmail.invalid && signupEmail.touched) || (signupEmail.value && !isEmailFormatValid(signupEmail.value)) || emailExists || signupError"
+                [class.checking]="checkingEmail"
+                id="signupEmail"
+                placeholder="exemple@utilisateur.com"
+                name="email"
+                ngModel
+                required
+                email
+                #signupEmail="ngModel"
+                (blur)="checkEmailAvailability(signupEmail.value)"
+                (input)="onEmailInput(signupEmail.value)"
+              />
+              <div class="validation-icon" *ngIf="signupEmail.touched && !checkingEmail">
+                <i class="bx bx-check-circle" *ngIf="signupEmail.valid && isEmailFormatValid(signupEmail.value) && !emailExists && !signupError"></i>
+                <i class="bx bx-error-circle" *ngIf="signupEmail.invalid || (signupEmail.value && !isEmailFormatValid(signupEmail.value)) || emailExists || signupError"></i>
+              </div>
+              <div class="validation-icon" *ngIf="checkingEmail">
+                <i class="bx bx-loader-alt bx-spin"></i>
+              </div>
+            </div>
+            <div class="validation-message" *ngIf="signupEmail.touched && (signupEmail.invalid || (signupEmail.value && !isEmailFormatValid(signupEmail.value)) || emailExists || signupError)">
+              <div *ngIf="signupEmail.errors?.['required']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                L'adresse e-mail est requise
+              </div>
+              <div *ngIf="signupEmail.errors?.['email'] || (signupEmail.value && !isEmailFormatValid(signupEmail.value))" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                Format d'e-mail invalide (ex: utilisateur@domaine.com)
+              </div>
+              <div *ngIf="emailExists || signupError" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                {{ signupErrorMessage || 'Cette adresse e-mail est déjà utilisée' }}
+              </div>
+            </div>
+            <div class="validation-message" *ngIf="signupEmail.valid && isEmailFormatValid(signupEmail.value) && !emailExists && signupEmail.touched && !checkingEmail && !signupError">
+              <div class="success-text">
+                <i class="bx bx-check-circle"></i>
+                Adresse e-mail disponible
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signupPassword" class="form-label">
+              <i class="bx bx-lock"></i>
+              Mot de passe *
+            </label>
+            <div class="password-field">
+              <input
+                [type]="showSignupPassword ? 'text' : 'password'"
+                class="form-control"
+                [class.is-valid]="signupPassword.valid && signupPassword.touched"
+                [class.is-invalid]="signupPassword.invalid && signupPassword.touched"
+                id="signupPassword"
+                placeholder="••••••••"
+                name="password"
+                ngModel
+                required
+                minlength="6"
+                maxlength="50"
+                #signupPassword="ngModel"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                (click)="toggleSignupPassword()"
+                [attr.aria-label]="showSignupPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+              >
+                <i [class]="showSignupPassword ? 'bx bx-show' : 'bx bx-hide'"></i>
+              </button>
+            </div>
+            <div class="validation-message" *ngIf="signupPassword.touched && signupPassword.invalid">
+              <div *ngIf="signupPassword.errors?.['required']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                Le mot de passe est requis
+              </div>
+              <div *ngIf="signupPassword.errors?.['minlength']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                Le mot de passe doit contenir au moins 6 caractères
+              </div>
+              <div *ngIf="signupPassword.errors?.['maxlength']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                Le mot de passe ne peut pas dépasser 50 caractères
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signupAddress" class="form-label">
+              <i class="bx bx-map"></i>
+              Adresse *
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                class="form-control"
+                [class.is-valid]="signupAddress.valid && signupAddress.touched"
+                [class.is-invalid]="signupAddress.invalid && signupAddress.touched"
+                id="signupAddress"
+                placeholder="Votre adresse complète"
+                name="address"
+                ngModel
+                required
+                minlength="10"
+                maxlength="200"
+                #signupAddress="ngModel"
+              />
+              <div class="validation-icon" *ngIf="signupAddress.touched">
+                <i class="bx bx-check-circle" *ngIf="signupAddress.valid"></i>
+                <i class="bx bx-error-circle" *ngIf="signupAddress.invalid"></i>
+              </div>
+            </div>
+            <div class="validation-message" *ngIf="signupAddress.touched && signupAddress.invalid">
+              <div *ngIf="signupAddress.errors?.['required']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                L'adresse est requise
+              </div>
+              <div *ngIf="signupAddress.errors?.['minlength']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                L'adresse doit contenir au moins 10 caractères
+              </div>
+              <div *ngIf="signupAddress.errors?.['maxlength']" class="error-text">
+                <i class="bx bx-error-circle"></i>
+                L'adresse ne peut pas dépasser 200 caractères
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-options">
+              <label class="checkbox-container">
+                <input
+                  type="checkbox"
+                  id="acceptTerms"
+                  name="acceptTerms"
+                  ngModel
+                  required
+                  #acceptTerms="ngModel"
+                />
+                <span class="checkmark"></span>
+                J'accepte les <a href="#" target="_blank">conditions d'utilisation</a> *
+              </label>
+            </div>
+            <div class="validation-message" *ngIf="acceptTerms.touched && acceptTerms.invalid">
+              <div class="error-text">
+                <i class="bx bx-error-circle"></i>
+                Vous devez accepter les conditions d'utilisation
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn-primary auth-btn"
+            [disabled]="_form2.invalid || emailExists || checkingEmail || isSignupLoading"
+            [class.loading]="isSignupLoading"
+          >
+            <span *ngIf="!isSignupLoading">Créer mon compte</span>
+            <span *ngIf="isSignupLoading">Création...</span>
+            <i class="bx bx-right-arrow-alt" *ngIf="!isSignupLoading"></i>
+            <i class="bx bx-loader-alt bx-spin" *ngIf="isSignupLoading"></i>
+          </button>
+
+          <!-- Form Validation Summary -->
+          <div class="form-validation-summary" *ngIf="_form2.submitted && _form2.invalid">
+            <div class="validation-summary-header">
+              <i class="bx bx-error-circle"></i>
+              <span>Veuillez corriger les erreurs suivantes :</span>
+            </div>
+            <ul class="validation-summary-list">
+              <li *ngIf="signupName.invalid">Nom complet valide requis</li>
+              <li *ngIf="signupEmail.invalid || emailExists">Adresse e-mail valide et disponible requise</li>
+              <li *ngIf="signupPassword.invalid">Mot de passe valide requis (min. 6 caractères)</li>
+              <li *ngIf="signupAddress.invalid">Adresse complète requise (min. 10 caractères)</li>
+              <li *ngIf="acceptTerms.invalid">Acceptation des conditions d'utilisation requise</li>
+            </ul>
+          </div>
+
+          <div class="auth-switch">
+            <p>Déjà un compte ?</p>
+            <button type="button" class="switch-btn" (click)="signInToggle()">
+              Se connecter
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

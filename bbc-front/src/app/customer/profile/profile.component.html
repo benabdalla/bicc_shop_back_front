@@ -1,0 +1,99 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="text-center">Détails du profil</h5>
+    <hr class="my-3" />
+    <div class="row mb-3">
+      <div class="col-sm-3">
+        <h6 class="mb-0">Nom complet</h6>
+      </div>
+      <div class="col-sm-9 text-secondary">
+        <input type="text" class="form-control" [(ngModel)]="name" />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-3">
+        <h6 class="mb-0">
+          Email (<span *ngIf="emailVerified" class="text-success">Vérifié</span>
+          <span
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            *ngIf="!emailVerified"
+            class="text-danger cursor-pointer"
+            >Non vérifié</span
+          >)
+        </h6>
+      </div>
+      <div class="col-sm-9 text-secondary">
+        <input type="text" class="form-control" [(ngModel)]="email" />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-3">
+        <h6 class="mb-0">Adresse</h6>
+      </div>
+      <div class="col-sm-9 text-secondary">
+        <input type="text" class="form-control" [(ngModel)]="address" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 text-secondary">
+        <input type="button" class="btn btn-primary px-4" value="Enregistrer" />
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Vérifier l'email
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <input
+              *ngIf="!emailVerifiedNotifyModal"
+              type="text"
+              class="form-control"
+              placeholder="Saisir le code de vérification"
+              name="verificationCode"
+              [(ngModel)]="verificationCode"
+            />
+            <h2 *ngIf="emailVerifiedNotifyModal" class="text-center p-3">
+              Votre email est vérifié !
+            </h2>
+          </div>
+          <div *ngIf="!emailVerifiedNotifyModal" class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="sendVerificationCode()"
+            >
+              Envoyer le code
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="verifyCode()"
+            >
+              Vérifier
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

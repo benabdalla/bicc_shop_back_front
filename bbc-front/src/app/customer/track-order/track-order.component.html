@@ -1,0 +1,223 @@
+<div class="container py-2">
+  <h3 class="font-weight-light text-center text-muted">
+    Suivi de la commande #{{ item.orderId }}
+  </h3>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-6">
+          <strong>Nom du produit : </strong>{{ item.productName }}<br />
+          <strong>Date de livraison estimée : </strong>{{ item.deliveryDate }}
+        </div>
+        <div class="col-6">
+          <strong>Nom du magasin : </strong>{{ item.storeName }}<br />
+          <strong>Statut : </strong>{{ item.status }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- timeline item 1 -->
+  <div class="row g-0">
+    <div class="col-sm">
+      <!--spacer-->
+    </div>
+    <!-- timeline item 1 center dot -->
+    <div class="col-sm-1 text-center flex-column d-none d-sm-flex">
+      <div class="row h-50">
+        <div class="col">&nbsp;</div>
+        <div class="col">&nbsp;</div>
+      </div>
+      <h5 class="m-2">
+        <span
+          class="badge rounded-pill bg-light border"
+          [class.bg-primary]="item.status == 'Pending'"
+          >&nbsp;</span
+        >
+      </h5>
+      <div class="row h-50">
+        <div class="col border-end">&nbsp;</div>
+        <div class="col">&nbsp;</div>
+      </div>
+    </div>
+    <!-- timeline item 1 event content -->
+    <div class="col-sm py-2">
+      <div class="card radius-15">
+        <div class="card-body">
+          <h4
+            class="card-title"
+            [class.text-primary]="item.status == 'Pending'"
+          >
+            En attente
+          </h4>
+          <p class="card-text">En attente de traitement par le vendeur.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/row-->
+
+  <!-- timeline item 2 -->
+  <div class="row g-0">
+    <div class="col-sm py-2">
+      <div class="card radius-15">
+        <div class="card-body">
+          <h4
+            class="card-title"
+            [class.text-danger]="item.status == 'Canceled'"
+          >
+            Annulée
+          </h4>
+          <p class="card-text">
+            La commande a été annulée par le client ou le vendeur.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1 text-center flex-column d-none d-sm-flex">
+      <div class="row h-50">
+        <div class="col border-end">&nbsp;</div>
+        <div class="col">&nbsp;</div>
+      </div>
+      <h5 class="m-2">
+        <span
+          class="badge rounded-pill bg-light border"
+          [class.bg-danger]="item.status == 'Canceled'"
+          >&nbsp;</span
+        >
+      </h5>
+      <div class="row h-50">
+        <div class="col border-end">&nbsp;</div>
+        <div class="col">&nbsp;</div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <!--spacer-->
+    </div>
+  </div>
+  <!--/row-->
+
+  <!-- timeline item 3 -->
+  <div class="row g-0">
+    <div class="col-sm">
+      <!--spacer-->
+    </div>
+    <div class="col-sm-1 text-center flex-column d-none d-sm-flex">
+      <div class="row h-50">
+        <div class="col border-end">&nbsp;</div>
+        <div class="col">&nbsp;</div>
+      </div>
+      <h5 class="m-2">
+        <span
+          class="badge rounded-pill bg-light border"
+          [class.bg-primary]="item.status == 'Processing'"
+          >&nbsp;</span
+        >
+      </h5>
+      <div class="row h-50">
+        <div class="col border-end">&nbsp;</div>
+        <div class="col">&nbsp;</div>
+      </div>
+    </div>
+    <div class="col-sm py-2">
+      <div class="card radius-15">
+        <div class="card-body">
+          <h4
+            class="card-title"
+            [class.text-primary]="item.status == 'Processing'"
+          >
+            En cours de traitement
+          </h4>
+          <p>
+            La commande est en cours de vérification et de préparation pour
+            l'expédition.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/row-->
+
+  <!-- timeline item 4 -->
+  <div class="row g-0">
+    <div class="col-sm py-2">
+      <div class="card radius-15">
+        <div class="card-body">
+          <h4
+            class="card-title"
+            [class.text-primary]="item.status == 'Shipped'"
+          >
+            Expédiée
+          </h4>
+          <p class="card-text">
+            La commande a été expédiée depuis le vendeur et est arrivée à notre
+            centre logistique.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1 text-center flex-column d-none d-sm-flex">
+      <div class="row h-50">
+        <div class="col border-end">&nbsp;</div>
+        <div class="col">&nbsp;</div>
+      </div>
+      <h5 class="m-2">
+        <span
+          class="badge rounded-pill bg-light border"
+          [class.bg-primary]="item.status == 'Shipped'"
+          >&nbsp;</span
+        >
+      </h5>
+      <div class="row h-50">
+        <div class="col border-end">&nbsp;</div>
+        <div class="col">&nbsp;</div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <!--spacer-->
+    </div>
+  </div>
+  <!--/row-->
+
+  <!-- timeline item 5 -->
+  <div class="row g-0">
+    <div class="col-sm">
+      <!--spacer-->
+    </div>
+    <div class="col-sm-1 text-center flex-column d-none d-sm-flex">
+      <div class="row h-50">
+        <div class="col border-end">&nbsp;</div>
+        <div class="col">&nbsp;</div>
+      </div>
+      <h5 class="m-2">
+        <span
+          class="badge rounded-pill bg-light border"
+          [class.bg-success]="item.status == 'Delivered'"
+          >&nbsp;</span
+        >
+      </h5>
+      <div class="row h-50">
+        <div class="col">&nbsp;</div>
+        <div class="col">&nbsp;</div>
+      </div>
+    </div>
+    <div class="col-sm py-2">
+      <div class="card radius-15">
+        <div class="card-body">
+          <h4
+            class="card-title"
+            [class.text-success]="item.status == 'Delivered'"
+          >
+            Livrée
+          </h4>
+          <p>
+            La commande est arrivée à destination et a été reçue par le client.
+            La livraison est terminée.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/row-->
+</div>

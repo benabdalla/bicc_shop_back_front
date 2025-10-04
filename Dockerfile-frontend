@@ -1,0 +1,10 @@
+# Dockerfile for Angular frontend
+FROM node:18-alpine AS build
+WORKDIR /app
+COPY bbc-front/ /app/
+RUN npm install && npm run build --prod
+
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 4200
+CMD ["nginx", "-g", "daemon off;"]

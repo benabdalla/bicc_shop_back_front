@@ -1,0 +1,385 @@
+/* Category Products Component Styles */
+
+.page-wrapper {
+  margin-left: 0;
+  overflow-x: hidden;
+}
+
+/* Category Header Section */
+.category-header-section {
+  border-bottom: 1px solid #e9ecef;
+  background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+}
+
+.category-header-section h1 {
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+.category-header-section .btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+  transition: all 0.3s ease;
+}
+
+.category-header-section .btn-outline-secondary:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+}
+
+/* Product Cards */
+.product-card {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  border-color: rgba(210, 63, 87, 0.2);
+}
+
+.product-image {
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.discount-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* Price Section */
+.price-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price-section .text-primary {
+  color: #D23F57 !important;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* Rating */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.rating .bi-star-fill {
+  font-size: 0.875rem;
+}
+
+.rating .bi-star {
+  font-size: 0.875rem;
+}
+
+/* Empty State */
+.empty-state-content {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+.empty-state-content .display-1 {
+  opacity: 0.5;
+}
+
+.empty-state-content .btn-primary {
+  background: linear-gradient(45deg, #D23F57, #ff6b8a);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.empty-state-content .btn-primary:hover {
+  background: linear-gradient(45deg, #b8364f, #e55a7d);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(210, 63, 87, 0.3);
+}
+
+/* Loading Section */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Price Filter Section */
+.price-filter-section {
+  overflow: hidden;
+  transition: all 0.3s ease;
+  opacity: 0;
+  max-height: 0;
+}
+
+.price-filter-section.show {
+  opacity: 1;
+  max-height: 200px;
+}
+
+.price-filter-section .card {
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.price-filter-section .card-body {
+  padding: 1.5rem;
+}
+
+.price-display .badge {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+.btn-outline-primary.active {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: white;
+}
+
+.btn-outline-primary.active:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+/* Filter Controls */
+.form-control-sm {
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  transition: all 0.3s ease;
+}
+
+.form-control-sm:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+}
+
+.form-label.small {
+  font-weight: 500;
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+}
+
+/* Results Summary */
+.text-primary {
+  color: #D23F57 !important;
+}
+
+/* Filter Buttons */
+.btn-outline-primary {
+  border-color: #0d6efd;
+  color: #0d6efd;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.btn-sm {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+/* Range Slider Styles */
+.range-slider-container {
+  padding: 0.5rem 0;
+}
+
+.form-range {
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(to right, #e9ecef, #e9ecef);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #0d6efd;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(13, 110, 253, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.form-range::-webkit-slider-thumb:hover {
+  background: #0b5ed7;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #0d6efd;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(13, 110, 253, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.form-range::-moz-range-thumb:hover {
+  background: #0b5ed7;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+}
+
+.form-range:focus {
+  outline: 2px solid rgba(13, 110, 253, 0.2);
+  outline-offset: 2px;
+}
+
+/* Active filter indication */
+.price-filter-active {
+  border-left: 4px solid #0d6efd;
+}
+
+/* Enhanced form labels for slider section */
+.range-slider-container .form-label.small {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #495057;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Quick Filter Presets */
+.btn-outline-info {
+  border-color: #0dcaf0;
+  color: #0dcaf0;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.btn-outline-info:hover {
+  background-color: #0dcaf0;
+  border-color: #0dcaf0;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(13, 202, 240, 0.3);
+}
+
+/* Active Filter Alert */
+.alert-info {
+  background-color: rgba(13, 202, 240, 0.1);
+  border-color: rgba(13, 202, 240, 0.2);
+  color: #0c5460;
+  border-radius: 12px;
+  border-left: 4px solid #0dcaf0;
+}
+
+/* Sort Dropdown */
+.form-select-sm {
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+}
+
+.form-select-sm:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+}
+
+/* Sort label */
+.form-label.small.text-muted {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .category-header-section {
+    padding: 1rem 0 !important;
+  }
+
+  .category-header-section .d-flex {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+  }
+
+  .product-card:hover {
+    transform: none;
+  }
+
+  .product-card:hover .product-image {
+    transform: none;
+  }
+
+  /* Mobile Price Filter */
+  .price-filter-section .card-body {
+    padding: 1rem;
+  }
+
+  .price-filter-section .row {
+    gap: 1rem;
+  }
+
+  .price-filter-section .col-md-3,
+  .price-filter-section .col-md-6 {
+    margin-bottom: 1rem;
+  }
+
+  .d-flex.justify-content-between {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .price-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .empty-state-content {
+    padding: 2rem 1rem;
+  }
+}

@@ -1,0 +1,315 @@
+<div class="wrapper">
+  <div class="section-authentication-cover">
+    <div class="row g-0">
+      <div class="d-flex align-items-center px-5 py-2">
+        <h1 class="fw-bold fs-4 m-0">Vendeur BICC</h1>
+        <div class="ms-auto">
+          <form #_form="ngForm" (submit)="onSellerLogin(_form)">
+            <div class="d-flex gap-2">
+              <div class="position-relative">
+                <input
+                  class="form-control"
+                  [class.is-invalid]="loginEmail.invalid && loginEmail.touched"
+                  type="email"
+                  id="email1"
+                  name="email"
+                  placeholder="E-mail *"
+                  ngModel
+                  required
+                  email
+                  #loginEmail="ngModel"
+                />
+                <div class="invalid-tooltip" *ngIf="loginEmail.invalid && loginEmail.touched">
+                  <div *ngIf="loginEmail.errors?.['required']">E-mail requis</div>
+                  <div *ngIf="loginEmail.errors?.['email']">Format d'e-mail invalide</div>
+                </div>
+              </div>
+              <div class="position-relative">
+                <input
+                  class="form-control"
+                  [class.is-invalid]="loginPassword.invalid && loginPassword.touched"
+                  type="password"
+                  id="password1"
+                  name="password"
+                  ngModel
+                  required
+                  minlength="6"
+                  placeholder="Mot de passe *"
+                  #loginPassword="ngModel"
+                />
+                <div class="invalid-tooltip" *ngIf="loginPassword.invalid && loginPassword.touched">
+                  <div *ngIf="loginPassword.errors?.['required']">Mot de passe requis</div>
+                  <div *ngIf="loginPassword.errors?.['minlength']">Min. 6 caractères</div>
+                </div>
+              </div>
+              <button
+                class="btn btn-primary"
+                type="submit"
+                [disabled]="_form.invalid || isLoginLoading"
+                [class.loading]="isLoginLoading"
+              >
+                <span *ngIf="!isLoginLoading">Connexion</span>
+                <span *ngIf="isLoginLoading">
+                  <i class="bx bx-loader-alt bx-spin me-1"></i>
+                  Connexion...
+                </span>
+              </button>
+            </div>
+            <!-- Login Form Validation Summary -->
+            <div class="alert alert-danger mt-2 p-2" *ngIf="_form.submitted && _form.invalid">
+              <small>
+                <i class="bx bx-error-circle me-1"></i>
+                Veuillez remplir tous les champs requis correctement
+              </small>
+            </div>
+          </form>
+        </div>
+      </div>
+      <hr />
+      <div
+        class="col-12 col-xl-7 col-xxl-8 auth-cover-left align-items-center justify-content-center d-none d-xl-flex"
+      >
+        <div class="card shadow-none bg-transparent shadow-none rounded-0 mb-0">
+          <div class="card-body">
+            <img
+              src="./assets/images/login-images/register-cover.svg"
+              class="img-fluid auth-img-cover-login"
+              width="450"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-12 col-xl-5 col-xxl-4 auth-cover-right align-items-center justify-content-center"
+      >
+        <div class="card rounded-0 m-3 shadow-none bg-transparent mb-0">
+          <div class="card-body p-sm-5">
+            <div class="">
+              <div class="text-center mb-4">
+                <h4 class="">Créer un compte</h4>
+              </div>
+
+              <!-- Signup Error Banner -->
+              <div class="alert alert-danger" *ngIf="signupError">
+                <i class="bx bx-error-circle me-2"></i>
+                {{ signupErrorMessage }}
+              </div>
+
+              <div class="form-body">
+                <form
+                  #_form_reg="ngForm"
+                  (submit)="onSellerSignup(_form_reg)"
+                  class="row g-3"
+                >
+                  <div class="col-12">
+                    <label for="owner_name" class="form-label">
+                      Nom du propriétaire <span class="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [class.is-valid]="ownerName.valid && ownerName.touched"
+                      [class.is-invalid]="ownerName.invalid && ownerName.touched"
+                      id="owner_name"
+                      name="name"
+                      ngModel
+                      required
+                      minlength="2"
+                      maxlength="50"
+                      pattern="^[a-zA-ZÀ-ÿ\s]+$"
+                      #ownerName="ngModel"
+                      placeholder="Entrez le nom du propriétaire"
+                    />
+                    <div class="invalid-feedback" *ngIf="ownerName.invalid && ownerName.touched">
+                      <div *ngIf="ownerName.errors?.['required']">Le nom du propriétaire est requis</div>
+                      <div *ngIf="ownerName.errors?.['minlength']">Le nom doit contenir au moins 2 caractères</div>
+                      <div *ngIf="ownerName.errors?.['maxlength']">Le nom ne peut pas dépasser 50 caractères</div>
+                      <div *ngIf="ownerName.errors?.['pattern']">Le nom ne peut contenir que des lettres et espaces</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="store_name" class="form-label">
+                      Nom du magasin <span class="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [class.is-valid]="storeName.valid && storeName.touched"
+                      [class.is-invalid]="storeName.invalid && storeName.touched"
+                      id="store_name"
+                      name="storeName"
+                      ngModel
+                      required
+                      minlength="2"
+                      maxlength="100"
+                      #storeName="ngModel"
+                      placeholder="Entrez le nom du magasin"
+                    />
+                    <div class="invalid-feedback" *ngIf="storeName.invalid && storeName.touched">
+                      <div *ngIf="storeName.errors?.['required']">Le nom du magasin est requis</div>
+                      <div *ngIf="storeName.errors?.['minlength']">Le nom doit contenir au moins 2 caractères</div>
+                      <div *ngIf="storeName.errors?.['maxlength']">Le nom ne peut pas dépasser 100 caractères</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="address" class="form-label">
+                      Adresse du bureau <span class="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [class.is-valid]="officeAddress.valid && officeAddress.touched"
+                      [class.is-invalid]="officeAddress.invalid && officeAddress.touched"
+                      id="address"
+                      name="officeAddress"
+                      ngModel
+                      required
+                      minlength="10"
+                      maxlength="200"
+                      #officeAddress="ngModel"
+                      placeholder="Entrez l'adresse complète du bureau"
+                    />
+                    <div class="invalid-feedback" *ngIf="officeAddress.invalid && officeAddress.touched">
+                      <div *ngIf="officeAddress.errors?.['required']">L'adresse du bureau est requise</div>
+                      <div *ngIf="officeAddress.errors?.['minlength']">L'adresse doit contenir au moins 10 caractères</div>
+                      <div *ngIf="officeAddress.errors?.['maxlength']">L'adresse ne peut pas dépasser 200 caractères</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="inputEmailAddress" class="form-label">
+                      E-mail <span class="text-danger">*</span>
+                    </label>
+                    <div class="position-relative">
+                      <input
+                        type="email"
+                        class="form-control"
+                        [class.is-valid]="signupEmail.valid && signupEmail.touched && !emailExists"
+                        [class.is-invalid]="(signupEmail.invalid && signupEmail.touched) || emailExists"
+                        id="inputEmailAddress"
+                        placeholder="exemple@utilisateur.com"
+                        name="email"
+                        ngModel
+                        required
+                        email
+                        #signupEmail="ngModel"
+                        (blur)="checkEmailAvailability(signupEmail.value)"
+                        (input)="onEmailInput(signupEmail.value)"
+                      />
+                      <div class="position-absolute top-50 end-0 translate-middle-y pe-3" *ngIf="checkingEmail">
+                        <i class="bx bx-loader-alt bx-spin text-primary"></i>
+                      </div>
+                    </div>
+                    <div class="invalid-feedback" *ngIf="(signupEmail.invalid && signupEmail.touched) || emailExists">
+                      <div *ngIf="signupEmail.errors?.['required']">L'adresse e-mail est requise</div>
+                      <div *ngIf="signupEmail.errors?.['email']">Format d'e-mail invalide</div>
+                      <div *ngIf="emailExists">Cette adresse e-mail est déjà utilisée</div>
+                    </div>
+                    <div class="valid-feedback" *ngIf="signupEmail.valid && signupEmail.touched && !emailExists && !checkingEmail">
+                      Adresse e-mail disponible
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="inputChoosePassword" class="form-label">
+                      Mot de passe <span class="text-danger">*</span>
+                    </label>
+                    <div class="input-group">
+                      <input
+                        [type]="showPassword ? 'text' : 'password'"
+                        class="form-control border-end-0"
+                        [class.is-valid]="signupPassword.valid && signupPassword.touched"
+                        [class.is-invalid]="signupPassword.invalid && signupPassword.touched"
+                        id="inputChoosePassword"
+                        placeholder="Entrez votre mot de passe"
+                        name="password"
+                        ngModel
+                        required
+                        minlength="6"
+                        maxlength="50"
+                        #signupPassword="ngModel"
+                      />
+                      <button
+                        type="button"
+                        class="input-group-text bg-transparent border-start-0"
+                        (click)="togglePasswordVisibility()"
+                      >
+                        <i [class]="showPassword ? 'bx bx-show' : 'bx bx-hide'"></i>
+                      </button>
+                    </div>
+                    <div class="invalid-feedback" *ngIf="signupPassword.invalid && signupPassword.touched">
+                      <div *ngIf="signupPassword.errors?.['required']">Le mot de passe est requis</div>
+                      <div *ngIf="signupPassword.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères</div>
+                      <div *ngIf="signupPassword.errors?.['maxlength']">Le mot de passe ne peut pas dépasser 50 caractères</div>
+                    </div>
+                    <div class="form-text">
+                      <small>Le mot de passe doit contenir au moins 6 caractères</small>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="acceptTerms"
+                        name="acceptTerms"
+                        ngModel
+                        required
+                        #acceptTerms="ngModel"
+                      />
+                      <label class="form-check-label" for="acceptTerms">
+                        J'accepte les <a href="#" target="_blank">conditions d'utilisation</a>
+                        <span class="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div class="text-danger small" *ngIf="acceptTerms.invalid && acceptTerms.touched">
+                      Vous devez accepter les conditions d'utilisation
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="d-grid">
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                        [disabled]="_form_reg.invalid || emailExists || checkingEmail || isSignupLoading"
+                        [class.loading]="isSignupLoading"
+                      >
+                        <span *ngIf="!isSignupLoading">S'inscrire</span>
+                        <span *ngIf="isSignupLoading">
+                          <i class="bx bx-loader-alt bx-spin me-1"></i>
+                          Inscription...
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Form Validation Summary -->
+                  <div class="col-12" *ngIf="_form_reg.submitted && _form_reg.invalid">
+                    <div class="alert alert-danger p-3">
+                      <h6 class="alert-heading">
+                        <i class="bx bx-error-circle me-2"></i>
+                        Veuillez corriger les erreurs suivantes :
+                      </h6>
+                      <ul class="mb-0 small">
+                        <li *ngIf="ownerName.invalid">Nom du propriétaire valide requis</li>
+                        <li *ngIf="storeName.invalid">Nom du magasin valide requis</li>
+                        <li *ngIf="officeAddress.invalid">Adresse du bureau valide requise</li>
+                        <li *ngIf="signupEmail.invalid || emailExists">Adresse e-mail valide et disponible requise</li>
+                        <li *ngIf="signupPassword.invalid">Mot de passe valide requis (min. 6 caractères)</li>
+                        <li *ngIf="acceptTerms.invalid">Acceptation des conditions d'utilisation requise</li>
+                      </ul>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

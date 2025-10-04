@@ -1,0 +1,88 @@
+<div class="page-content">
+  <h4>Demandes de retrait en attente</h4>
+  <div class="card">
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nom du magasin</th>
+            <th>Date de demande</th>
+            <th>Montant</th>
+            <th>Voir détails</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of pendingWithdrawals; let i = index">
+            <td>{{ t.storeName }}</td>
+            <td>{{ t.requestDate }}</td>
+            <td>{{ t.amount }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm radius-30 px-4"
+              >
+                Voir détails
+              </button>
+            </td>
+            <td>
+              <div class="d-flex order-actions">
+                <a (click)="updateWithdraw(i, 'Paid')" class="cursor-pointer"
+                  ><i class="bx bx-check"></i
+                ></a>
+                <a
+                  (click)="updateWithdraw(i, 'Declined')"
+                  class="ms-3 cursor-pointer"
+                  ><i class="bx bx-x"></i
+                ></a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <span *ngIf="pendingWithdrawals.length == 0" class="d-block text-center"
+        >Aucune demande en attente trouvée !</span
+      >
+    </div>
+  </div>
+  <h4>Historique des transactions</h4>
+  <div class="card">
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom du magasin</th>
+            <th>Date de demande</th>
+            <th>Montant</th>
+            <th>Date de paiement</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of transactions">
+            <td>{{ t.id }}</td>
+            <td>{{ t.storeName }}</td>
+            <td>{{ t.requestDate }}</td>
+            <td>{{ t.amount }}</td>
+            <td>{{ t.paymentDate }}</td>
+            <td>
+              <div
+                [class]="
+                  t.status == 'Declined'
+                    ? 'text-danger bg-light-danger'
+                    : t.status == 'Pending'
+                    ? 'text-warning bg-light-warning'
+                    : 'text-success bg-light-success'
+                "
+                class="badge rounded-pill p-2 text-uppercase px-3"
+              >
+                <i class="bx bxs-circle me-1"></i>{{ t.status | statusFr }}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

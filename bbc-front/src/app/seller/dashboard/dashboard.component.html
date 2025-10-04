@@ -1,0 +1,165 @@
+<div class="page-content">
+  <div class="card radius-10">
+    <div class="card-body">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3">
+        <div class="col">
+          <div class="card radius-10 overflow-hidden mb-0 shadow-none border">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-secondary font-14">Commandes totales</p>
+                  <h5 class="my-0 fs-1">{{ stat.totalOrder }}</h5>
+                </div>
+                <div class="text-primary ms-auto font-30">
+                  <i class="bx bx-cart-alt"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card radius-10 overflow-hidden mb-0 shadow-none border">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-secondary font-14">Nouvelles commandes</p>
+                  <h5 class="my-0 fs-1">{{ stat.newOrder }}</h5>
+                </div>
+                <div class="text-danger ms-auto font-30">
+                  <i class="bx bx-dollar"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card radius-10 overflow-hidden mb-0 shadow-none border">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-secondary font-14">En traitement</p>
+                  <h5 class="my-0 fs-1">{{ stat.processing }}</h5>
+                </div>
+                <div class="text-success ms-auto font-30">
+                  <i class="bx bx-group"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card radius-10 overflow-hidden mb-0 shadow-none border">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-secondary font-14">Articles vendus</p>
+                  <h5 class="my-0 fs-1">{{ stat.soldItems }}</h5>
+                </div>
+                <div class="text-warning ms-auto font-30">
+                  <i class="bx bx-beer"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--end row-->
+    </div>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 row-cols-xxl-4">
+    <div class="col">
+      <div class="card radius-10 bg-gradient-cosmic">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="me-auto">
+              <p class="mb-0 text-white">Revenu total</p>
+              <h4 class="my-1 text-white">
+                {{ stat.revenue }} TND
+              </h4>
+              <p class="mb-0 font-13 text-white">
+                +2,5% par rapport à la semaine dernière
+              </p>
+            </div>
+            <div id="chart1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card radius-10 bg-gradient-ibiza">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="me-auto">
+              <p class="mb-0 text-white">Bénéfice total</p>
+              <h4 class="my-1 text-white">
+                {{ stat.profit  }}  TND
+              </h4>
+              <p class="mb-0 font-13 text-white">
+                +5,4% par rapport à la semaine dernière
+              </p>
+            </div>
+            <div id="chart2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card radius-10">
+    <div class="card-header bg-transparent">
+      <div class="d-flex align-items-center">
+        <div>
+          <h6 class="mb-0 p-2">Commandes récentes</h6>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>ID commande</th>
+              <th>Statut</th>
+              <th>Montant</th>
+              <th>Date de commande</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let o of orders">
+              <td>#{{ o.id }}</td>
+              <td>
+                <span
+                  [class]="
+                    o.status == 'Canceled'
+                      ? 'bg-gradient-bloody'
+                      : o.status == 'Processing'
+                      ? 'bg-gradient-blooker'
+                      : 'bg-gradient-quepal'
+                  "
+                  class="badge text-white shadow-sm w-100 py-2"
+                >
+                  {{
+                    o.status == "Canceled"
+                      ? "Annulée"
+                      : o.status == "Processing"
+                      ? "En traitement"
+                      : o.status == "Completed"
+                      ? "Terminée"
+                      : o.status == "Shipped"
+                      ? "Expédiée"
+                      : o.status == "Pending"
+                      ? "En attente"
+                      : o.status
+                  }}
+                </span>
+              </td>
+              <td>{{ o.orderTotal }}</td>
+              <td>{{ o.orderDate }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

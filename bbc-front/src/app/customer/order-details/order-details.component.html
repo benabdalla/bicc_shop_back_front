@@ -1,0 +1,200 @@
+<div class="card">
+  <div class="card-body">
+    <h3>Détails de la commande</h3>
+    <div class="d-flex">
+      <p>
+        ID de commande : <strong>#{{ order.id }}</strong>
+      </p>
+      <p class="ms-auto">
+        Passée le : <strong>{{ order.orderDate }}</strong>
+      </p>
+    </div>
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Nom du produit</th>
+            <th>Prix unitaire</th>
+            <th>Quantité</th>
+            <th>Sous-total</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of order.orderDetails; let i = index">
+            <td>
+              <h6 class="mb-0 font-14">{{ p.productName }}</h6>
+            </td>
+            <td>{{ p.productUnitPrice }}</td>
+            <td>{{ p.quantity }}</td>
+            <td>{{ p.subTotal }}</td>
+            <td>
+              <div
+                [class]="
+                  p.status == 'Canceled'
+                    ? 'text-danger bg-light-danger'
+                    : p.status == 'Delivered'
+                    ? 'text-success bg-light-success'
+                    : 'text-primary bg-light-primary'
+                "
+                class="badge rounded-pill p-2 text-uppercase px-3"
+              >
+                <i class="bx bxs-circle me-1"></i>{{ p.status | statusFr }}
+              </div>
+            </td>
+            <td>
+              <button
+                (click)="trackOrder(p)"
+                type="button"
+                class="btn btn-primary btn-sm radius-30 px-4"
+              >
+                Suivre
+              </button>
+              <button
+                *ngIf="refundEligible && p.status == 'Delivered'"
+                (click)="setRefundDetails(p.id, p.sellerId)"
+                data-bs-toggle="modal"
+                data-bs-target="#refundModal"
+                type="button"
+                class="btn btn-warning btn-sm radius-30 px-4"
+              >
+                Remboursement
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6">
+    <div class="card">
+      <div class="card-body">
+        <h5>Adresse de livraison</h5>
+        <hr />
+        <p><strong>Adresse :</strong> {{ order.shippingStreet }}</p>
+        <p><strong>Code postal :</strong> {{ order.shippingPostCode }}</p>
+        <p><strong>Ville :</strong> {{ order.shippingCity }}</p>
+        <p><strong>Gouvernorat :</strong> {{ order.shippingState }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card">
+      <div class="card-body">
+        <h5>Résumé de la commande</h5>
+        <hr />
+        <table class="table table-borderless">
+          <tbody>
+            <tr>
+              <th>Sous-total</th>
+              <td class="text-end">{{ order.subTotal.toFixed(2) }}TND</td>
+            </tr>
+            <tr>
+              <th>Frais de livraison</th>
+              <td class="text-end">{{ order.shippingCharge.toFixed(2) }}TND</td>
+            </tr>
+            <tr>
+              <th>Frais de passerelle</th>
+              <td class="text-end">{{ order.gatewayFee.toFixed(2) }}TND</td>
+            </tr>
+            <tr>
+              <th>Taxe (5%)</th>
+              <td class="text-end">{{ order.tax.toFixed(2) }}TND</td>
+            </tr>
+            <tr>
+              <th>Remise</th>
+              <td class="text-end">{{ order.discount.toFixed(2) }}TND</td>
+            </tr>
+            <tr>
+              <th>Total</th>
+              <td class="text-end">
+                <strong>{{ order.orderTotal.toFixed(2) }}TND</strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <hr />
+        <p>Payé par {{ order.paymentMethod }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="refundModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Détails du remboursement
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control rounded-3"
+              id="bank_name"
+              placeholder="Nom de la banque"
+              [(ngModel)]="refundDetails.bankName"
+              name="bank_name"
+            />
+            <label for="code">Nom de la banque</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control rounded-3"
+              id="bank_number"
+              placeholder="Numéro de compte bancaire"
+              [(ngModel)]="refundDetails.bankNumber"
+              name="value"
+            />
+            <label for="bank_number">Numéro de compte bancaire</label>
+          </div>
+          <div class="form-floating mb-3">
+            <select
+              class="form-select"
+              id="reason"
+              [(ngModel)]="refundDetails.reason"
+              name="reason"
+            >
+              <option>Produit endommagé</option>
+              <option>Mauvais produit</option>
+              <option>J'ai changé d'avis</option>
+            </select>
+            <label for="floatingSelect">Motif du remboursement</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onRefund()"
+          data-bs-dismiss="modal"
+        >
+          Envoyer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
