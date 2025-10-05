@@ -273,7 +273,7 @@
       class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-4"
       *ngIf="products.length > 0"
     >
-      <div *ngFor="let p of products; trackBy: trackByProductId" class="col">
+      <!-- <div *ngFor="let p of products; trackBy: trackByProductId" class="col">
         <div
           class="card h-100 product-card cursor-pointer"
           (click)="showProduct(p.id)"
@@ -297,7 +297,7 @@
           <div class="card-body d-flex flex-column">
             <h6 class="card-title">{{ p.title }}</h6>
 
-            <!-- Price Section -->
+
             <div class="mt-auto">
               <div
                 class="d-flex justify-content-between align-items-center mb-2"
@@ -314,7 +314,7 @@
               </div>
 
               <!-- Rating -->
-              <div class="d-flex align-items-center justify-content-between">
+              <!-- <div class="d-flex align-items-center justify-content-between">
                 <div class="rating">
                   <i class="bi bi-star-fill text-warning"></i>
                   <i class="bi bi-star-fill text-warning"></i>
@@ -327,7 +327,93 @@
             </div>
           </div>
         </div>
+
+
+      </div> -->
+
+    <div
+        *ngFor="let p of products"
+        class="col cursor-pointer product-item"
+        (click)="showProduct(p.id)"
+        (keydown.enter)="showProduct(p.id)"
+        (keydown.space)="showProduct(p.id)"
+        [attr.aria-label]="'Voir les détails pour ' + p.title"
+      >
+        <div class="card product-card">
+          <div class="card-image-container">
+            <img
+              src="{{ host + getFirstImage(p) }}"
+              class="card-img-top product-image"
+              [alt]="p.title"
+            />
+            <div class="image-overlay" style="bottom:90px;">
+              <i class="bi bi-eye-fill"></i>
+              <span>Voir détails</span>
+            </div>
+          </div>
+
+          <!-- Discount Badge - only show if there's a discount -->
+          <div
+            class="position-absolute top-0 end-0 m-3 product-discount"
+            *ngIf="p.salePrice > 0 && p.salePrice < p.regularPrice"
+          >
+            <span class="discount-badge">{{ getDiscountPercentage(p) }}</span>
+          </div>
+
+          <!-- New/Featured Badge -->
+          <div class="position-absolute top-0 start-0 m-3 product-badge">
+            <span class="new-badge">Nouveau</span>
+          </div>
+
+          <div class="card-body">
+            <h6 class="card-title">{{ p.title }}</h6>
+
+            <!-- Enhanced Pricing Logic -->
+            <div class="price-container">
+
+              <!-- Case 2: When salePrice exists and is different from regularPrice -->
+              <div
+                *ngIf="p.salePrice > 0 && p.salePrice !== p.regularPrice"
+                class="price-discount"
+              >
+                <span class="original-price">{{ p.regularPrice }} TND</span>
+                <span class="sale-price">{{ p.salePrice }} TND</span>
+              </div>
+
+              <div
+                *ngIf="!(p.salePrice > 0 && p.salePrice !== p.regularPrice)"
+                class="price-single"
+              >
+                <span class="current-price">{{ p.regularPrice }} TND</span>
+              </div>
+            </div>
+    <!-- Quick Action Buttons -->
+            <div class="quick-actions">
+              <button
+                class="btn btn-outline-primary btn-sm quick-btn"
+                (click)="addToCart(p, $event)"
+              >
+                <i class="bi bi-cart-plus"></i>
+                Ajouter
+              </button>
+
+                  <button
+                class="btn btn-success btn-sm quick-btn buy-now-btn"
+                (click)="buyNow(p, $event)"
+
+              >
+                <i class="bi bi-lightning-fill"></i>
+               Acheter
+              </button>
+
+            </div>
+
+
+          </div>
+        </div>
       </div>
+
+
     </div>
 
     <!-- Empty State -->

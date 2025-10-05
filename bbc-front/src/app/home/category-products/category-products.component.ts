@@ -275,4 +275,48 @@ export class CategoryProductsComponent implements OnInit {
   onSortChange(): void {
     this.applySorting();
   }
+
+    addToCart(product: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    // Check if customer is logged in
+    const customer = this.customerService.getCustomer();
+    if (!customer) {
+      console.log("Veuillez vous connecter pour ajouter au panier");
+      // Replace with your notification method
+      // this.util.toastify(false, "Veuillez vous connecter pour ajouter au panier");
+      return;
+    }
+
+    let cartItem: any = {
+      customerId: customer.id,
+      productId: product.id,
+      sellerId: product.sellerId,
+      storeName: product.storeName,
+      productName: product.title,
+      productThumbnailUrl: this.getFirstImage(product),
+      productUnitPrice: product.salePrice > 0 ? product.salePrice : product.regularPrice,
+      productQuantity: 1,
+      subTotal: (product.salePrice > 0 ? product.salePrice : product.regularPrice) * 1,
+    };
+
+    this.customerService.addToCart(cartItem).subscribe((response) => {
+      console.log("Produit ajouté au panier");
+      // Replace with your notification method
+      // this.util.toastify(response != null, "Produit ajouté au panier");
+      this.customerService.toUpdateCart();
+    });
+  }
+
+  buyNow(product: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    this.addToCart(product);
+    this.router.navigate(['cart']);
+  }
+
 }

@@ -1,387 +1,385 @@
 <div class="page-wrapper">
   <div class="page-content">
-    <div class="card">
-      <div class="row g-0">
-        <div class="col-md-4 border-end">
-          <!-- Main Image Display -->
-          <div class="position-relative main-image-container">
-            <img
-              src="{{ host + getCurrentImage() }}"
-              class="img-fluid main-product-image"
-              [alt]="product.title"
-            />
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#" routerLink="/">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="#">{{ product.category }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
+      </ol>
+    </nav>
 
-            <!-- Navigation arrows for multiple images -->
-            <div *ngIf="hasMultipleImages()" class="image-navigation">
-              <button
-                class="btn btn-light btn-sm nav-btn nav-prev"
-                (click)="previousImage()"
-                title="Image précédente"
-              >
-                <i class="bx bx-chevron-left"></i>
-              </button>
-              <button
-                class="btn btn-light btn-sm nav-btn nav-next"
-                (click)="nextImage()"
-                title="Image suivante"
-              >
-                <i class="bx bx-chevron-right"></i>
-              </button>
+    <div class="product-container">
+      <div class="row g-4">
+        <!-- Image Gallery Section -->
+        <div class="col-lg-6 col-md-6">
+          <div class="product-gallery">
+            <!-- Main Image Display -->
+            <div class="main-image-container">
+              <div class="image-wrapper">
+                <img
+                  src="{{ host + getCurrentImage() }}"
+                  class="main-product-image"
+                  [alt]="product.title"
+                />
+
+                <!-- Image Zoom Indicator -->
+                <div class="zoom-indicator">
+                  <i class="bi bi-zoom-in"></i>
+                  <span>Survoler pour zoomer</span>
+                </div>
+
+                <!-- Navigation Arrows -->
+                <div *ngIf="hasMultipleImages()" class="image-navigation">
+                  <button
+                    class="nav-btn nav-prev"
+                    (click)="previousImage()"
+                    [disabled]="currentImageIndex === 0"
+                    title="Image précédente"
+                  >
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <button
+                    class="nav-btn nav-next"
+                    (click)="nextImage()"
+                    [disabled]="currentImageIndex === getAllImages().length - 1"
+                    title="Image suivante"
+                  >
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+
+                <!-- Image Counter -->
+                <div *ngIf="hasMultipleImages()" class="image-counter">
+                  <span>{{ currentImageIndex + 1 }}</span>
+                  <span>/</span>
+                  <span>{{ getAllImages().length }}</span>
+                </div>
+
+
+
+
+                <!-- Discount Badge -->
+                <div *ngIf="product.salePrice < product.regularPrice" class="discount-badge">
+
+                </div>
+              </div>
             </div>
 
-            <!-- Image counter -->
-            <div *ngIf="hasMultipleImages()" class="image-counter">
-              {{ currentImageIndex + 1 }} / {{ getAllImages().length }}
-            </div>
-          </div>
-
-          <!-- Thumbnail Gallery -->
-          <div
-            class="row mb-3 row-cols-auto g-2 justify-content-center mt-3 thumbnail-gallery"
-            *ngIf="getAllImages().length > 0"
-          >
-            <div
-              class="col"
-              *ngFor="let image of getAllImages(); let i = index"
-            >
-              <img
-                src="{{ host + image }}"
-                width="70"
-                class="border rounded cursor-pointer thumbnail-image"
-                [class.active]="i === currentImageIndex"
-                (click)="setCurrentImage(i)"
-                [alt]="'Product thumbnail ' + (i + 1)"
-              />
+            <!-- Thumbnail Gallery -->
+            <div class="thumbnail-gallery" *ngIf="getAllImages().length > 1">
+              <div class="thumbnail-container">
+                <div
+                  class="thumbnail-item"
+                  *ngFor="let image of getAllImages(); let i = index"
+                  [class.active]="i === currentImageIndex"
+                  (click)="setCurrentImage(i)"
+                >
+                  <img
+                    src="{{ host + image }}"
+                    [alt]="'Product thumbnail ' + (i + 1)"
+                    class="thumbnail-image"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h2
-              class="float-end text-danger cursor-pointer"
-              (click)="toggleWishlist()"
-            >
-              <i
-                class="bx"
-                [class]="isWishlisted ? 'bxs-heart' : 'bx-heart'"
-              ></i>
-            </h2>
-            <h4 class="card-title">{{ product.title }}</h4>
-            <div class="d-flex gap-3 py-3">
-              <div class="cursor-pointer">
-                <i
-                  class="bx bxs-star {{
-                    avgStar >= 20 ? 'text-warning' : 'text-secondary'
-                  }}"
-                ></i>
-                <i
-                  class="bx bxs-star {{
-                    avgStar >= 40 ? 'text-warning' : 'text-secondary'
-                  }}"
-                ></i>
-                <i
-                  class="bx bxs-star {{
-                    avgStar >= 60 ? 'text-warning' : 'text-secondary'
-                  }}"
-                ></i>
-                <i
-                  class="bx bxs-star {{
-                    avgStar >= 80 ? 'text-warning' : 'text-secondary'
-                  }}"
-                ></i>
-                <i
-                  class="bx bxs-star {{
-                    avgStar >= 100 ? 'text-warning' : 'text-secondary'
-                  }}"
-                ></i>
+
+        <!-- Product Details Section -->
+        <div class="col-lg-6 col-md-6">
+          <div class="product-details">
+            <!-- Header -->
+            <div class="product-header">
+              <div class="store-info">
+                <i class="bi bi-shop"></i>
+                <span>{{ product.storeName }}</span>
+                <span class="verified-badge">
+                  <i class="bi bi-patch-check-fill"></i>
+                  Vérifié
+                </span>
               </div>
-              <div>{{ reviews.length }} avis</div>
-              <!--<div class="text-success">
-                <i class="bx bxs-cart-alt align-middle"></i> 134 orders
-              </div>-->
-            </div>
-            <div class="mb-3">
-              <span class="price h4">{{ product.salePrice }} TND</span>
-              <!-- <span class="text-muted">/per kg</span> -->
-              <span class="me-2 text-decoration-line-through text-secondary"
-                >{{ product.regularPrice }} TND
-              </span>
-            </div>
-            <!--<p class="card-text fs-6">
-              Virgil Abloh’s Off-White is a streetwear-inspired collection that
-              continues to break away from the conventions of mainstream
-              fashion. Made in Italy, these black and brown Odsy-1000 low-top
-              sneakers.
-            </p>-->
-            <dl class="row">
-              <!--<dt class="col-sm-3">Model#</dt>
-              <dd class="col-sm-9">Odsy-1000</dd>-->
 
-              <dt class="col-sm-3">Catégorie</dt>
-              <dd class="col-sm-9">{{ product.category }}</dd>
+              <div class="wishlist-btn" (click)="toggleWishlist()">
+                <i class="bi" [class]="isWishlisted ? 'bi-heart-fill' : 'bi-heart'"></i>
+              </div>
+            </div>
 
-              <dt class="col-sm-3">Nom du magasin</dt>
-              <dd class="col-sm-9">{{ product.storeName }}</dd>
-            </dl>
-            <hr />
-            <div
-              class="row row-cols-auto row-cols-1 row-cols-md-3 align-items-center"
-            >
-              <div class="col">
-                <label class="form-label">Quantité</label>
-                <div class="input-group input-spinner">
+            <!-- Product Title -->
+            <h1 class="product-title">{{ product.title }}</h1>
+
+            <!-- Category Badge -->
+            <div class="category-badge">
+              <i class="bi bi-tag"></i>
+              <span>{{ product.category }}</span>
+            </div>
+
+            <!-- Rating Section -->
+            <div class="rating-section">
+              <div class="stars">
+                <i class="bi" [class]="avgStar >= 20 ? 'bi-star-fill' : 'bi-star'" [class.text-warning]="avgStar >= 20"></i>
+                <i class="bi" [class]="avgStar >= 40 ? 'bi-star-fill' : 'bi-star'" [class.text-warning]="avgStar >= 40"></i>
+                <i class="bi" [class]="avgStar >= 60 ? 'bi-star-fill' : 'bi-star'" [class.text-warning]="avgStar >= 60"></i>
+                <i class="bi" [class]="avgStar >= 80 ? 'bi-star-fill' : 'bi-star'" [class.text-warning]="avgStar >= 80"></i>
+                <i class="bi" [class]="avgStar >= 100 ? 'bi-star-fill' : 'bi-star'" [class.text-warning]="avgStar >= 100"></i>
+              </div>
+
+            </div>
+
+            <!-- Pricing Section -->
+            <div class="pricing-section">
+              <!-- Discount pricing (when salePrice exists and is different from regularPrice) -->
+              <div *ngIf="product.salePrice > 0 && product.salePrice !== product.regularPrice" class="price-discount">
+                <span class="current-price sale-price">{{ product.salePrice }} TND</span>
+                <span class="original-price">{{ product.regularPrice }} TND</span>
+                <div class="savings">
+                  <i class="bi bi-tag-fill"></i>
+                  Vous économisez {{ product.regularPrice - product.salePrice }} TND
+                </div>
+              </div>
+
+              <!-- Regular pricing (when no discount) -->
+              <div *ngIf="!(product.salePrice > 0 && product.salePrice !== product.regularPrice)" class="price-single">
+                <span class="current-price">{{ product.regularPrice }} TND</span>
+              </div>
+            </div>
+
+
+
+
+
+            <!-- Stock Status -->
+            <div class="stock-status">
+              <div class="stock-indicator available">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>En stock</span>
+              </div>
+              <div class="delivery-info">
+                <i class="bi bi-truck"></i>
+                <span>Livraison gratuite pour les commandes de plus de 50 TND</span>
+              </div>
+            </div>
+
+            <!-- Product Description -->
+            <div class="product-description" *ngIf="product.description">
+              <h6>Description</h6>
+              <p>{{ product.description }}</p>
+            </div>
+
+            <!-- Quantity and Actions -->
+            <div class="purchase-section">
+              <div class="quantity-section">
+                <label class="quantity-label">Quantité</label>
+                <div class="quantity-selector">
                   <button
-                    (click)="quantityChange(false)"
-                    class="btn btn-white"
-                    type="button"
-                    id="button-plus"
+                    class="quantity-btn minus"
+                    (click)="quantityChange(true)"
+                    [disabled]="quantity <= 1"
                   >
-                    +
+                    <i class="bi bi-dash"></i>
                   </button>
                   <input
-                    disabled
                     type="number"
-                    class="form-control"
-                    name="quantity"
+                    class="quantity-input"
                     [(ngModel)]="quantity"
+                    [min]="1"
+                    readonly
                   />
                   <button
-                    (click)="quantityChange(true)"
-                    class="btn btn-white"
-                    type="button"
-                    id="button-minus"
+                    class="quantity-btn plus"
+                    (click)="quantityChange(false)"
                   >
-                    −
+                    <i class="bi bi-plus"></i>
                   </button>
                 </div>
               </div>
-              <!-- <div class="col">
-                                <label class="form-label">Select size</label>
-                                <div class="">
-                                    <label class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" name="select_size" checked=""
-                                            class="custom-control-input">
-                                        <div class="form-check-label">Small</div>
-                                    </label>
-                                    <label class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" name="select_size" checked=""
-                                            class="custom-control-input">
-                                        <div class="form-check-label">Medium</div>
-                                    </label>
 
-                                    <label class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" name="select_size" checked=""
-                                            class="custom-control-input">
-                                        <div class="form-check-label">Large</div>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <label class="form-label">Select Color</label>
-                                <div class="color-indigators d-flex align-items-center gap-2">
-                                    <div class="color-indigator-item bg-primary"></div>
-                                    <div class="color-indigator-item bg-danger"></div>
-                                    <div class="color-indigator-item bg-success"></div>
-                                    <div class="color-indigator-item bg-warning"></div>
-                                </div>
-                            </div> -->
-            </div>
-            <div class="d-flex gap-3 mt-3">
-              <button (click)="buyNow()" class="btn btn-primary">
-                Acheter maintenant
-              </button>
-              <button (click)="addToCart()" class="btn btn-outline-primary">
-                <span class="text">Ajouter au panier</span>
-                <i class="bx bxs-cart-alt"></i>
-              </button>
+              <!-- Action Buttons -->
+              <div class="action-buttons">
+                <button class="btn btn-primary btn-buy-now" (click)="buyNow()">
+                  <i class="bi bi-lightning-fill"></i>
+                  <span>Acheter maintenant</span>
+                </button>
+                <button class="btn btn-outline-primary btn-add-cart" (click)="addToCart()">
+                  <i class="bi bi-cart-plus"></i>
+                  <span>Ajouter au panier</span>
+                </button>
+              </div>
+
+              <!-- Additional Info -->
+              <div class="additional-info">
+                <div class="info-item">
+                  <i class="bi bi-shield-check"></i>
+                  <span>Garantie de remboursement</span>
+                </div>
+                <div class="info-item">
+                  <i class="bi bi-arrow-clockwise"></i>
+                  <span>Retour gratuit sous 30 jours</span>
+                </div>
+                <div class="info-item">
+                  <i class="bi bi-telephone"></i>
+                  <span>Support client 24/7</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <hr />
-      <div class="card-body">
-        <ul class="nav nav-tabs nav-primary mb-0" role="tablist">
-          <li class="nav-item" role="presentation">
-            <a
-              class="nav-link active"
-              data-bs-toggle="tab"
-              href="#primaryhome"
-              role="tab"
-              aria-selected="true"
-            >
-              <div class="d-flex align-items-center">
-                <div class="tab-icon">
-                  <i class="bx bx-comment-detail font-18 me-1"></i>
-                </div>
-                <div class="tab-title">Description du produit</div>
+
+      <!-- Product Tabs Section -->
+      <div class="product-tabs-section">
+        <div class="tabs-container">
+          <ul class="nav nav-tabs" id="productTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="description-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#description"
+                type="button"
+                role="tab"
+              >
+                <i class="bi bi-file-text"></i>
+                Description
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="specifications-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#specifications"
+                type="button"
+                role="tab"
+              >
+                <i class="bi bi-list-ul"></i>
+                Spécifications
+              </button>
+            </li>
+
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="shipping-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#shipping"
+                type="button"
+                role="tab"
+              >
+                <i class="bi bi-truck"></i>
+                Livraison
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="productTabsContent">
+            <!-- Description Tab -->
+            <div class="tab-pane fade show active" id="description" role="tabpanel">
+              <div class="tab-content-wrapper">
+                <h5>Description du produit</h5>
+                <p>{{ product.description || 'Aucune description disponible pour ce produit.' }}</p>
               </div>
-            </a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a
-              class="nav-link"
-              data-bs-toggle="tab"
-              href="#primaryprofile"
-              role="tab"
-              aria-selected="false"
-            >
-              <div class="d-flex align-items-center">
-                <div class="tab-icon">
-                  <i class="bx bx-bookmark-alt font-18 me-1"></i>
-                </div>
-                <div class="tab-title">Tags</div>
-              </div>
-            </a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a
-              class="nav-link"
-              data-bs-toggle="tab"
-              href="#primarycontact"
-              role="tab"
-              aria-selected="false"
-            >
-              <div class="d-flex align-items-center">
-                <div class="tab-icon">
-                  <i class="bx bx-star font-18 me-1"></i>
-                </div>
-                <div class="tab-title">Avis</div>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <div class="tab-content pt-3">
-          <div
-            class="tab-pane fade show active"
-            id="primaryhome"
-            role="tabpanel"
-          >
-            <!--<p>
-              Raw denim you probably haven't heard of them jean shorts Austin.
-              Nesciunt tofu stumptown aliqua, retro synth master cleanse.
-              Mustache cliche tempor, williamsburg carles vegan helvetica.
-              Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby
-              sweater eu banh mi, qui irure terry richardson ex squid. Aliquip
-              placeat salvia cillum iphone. Seitan aliquip quis cardigan
-              american apparel, butcher voluptate nisi.
-            </p>
-            <p>
-              Jean brut, vous n'en avez probablement jamais entendu parler,
-              shorts en jean Austin. Nesciunt tofu stumptown aliqua, master
-              cleanse rétro synth. Moustache cliché tempor, williamsburg carles
-              vegan helvetica. Reprehenderit butcher rétro keffiyeh dreamcatcher
-              synth. Cosby sweater eu banh mi, qui irure terry richardson ex
-              squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis
-              cardigan american apparel, butcher voluptate nisi.
-            </p>
-            <p>
-              Jean brut, vous n'en avez probablement jamais entendu parler,
-              shorts en jean Austin. Nesciunt tofu stumptown aliqua, master
-              cleanse rétro synth. Moustache cliché tempor, williamsburg carles
-              vegan helvetica. Reprehenderit butcher rétro keffiyeh dreamcatcher
-              synth. Cosby sweater eu banh mi, qui irure terry richardson ex
-              squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis
-              cardigan american apparel, butcher voluptate nisi.
-            </p>
-          </div>
-          <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
-            <p>
-              Food truck fixie locavore, accusamus mcsweeney's marfa nulla
-              single-origin coffee squid. Exercitation +1 labore velit, blog
-              sartorial PBR leggings next level wes anderson artisan four loko
-              farm-to-table craft beer twee. Qui photo booth letterpress,
-              commodo enim craft beer mlkshk aliquip jean shorts ullamco ad
-              vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic
-              magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna
-              velit sapiente labore stumptown. Vegan fanny pack odio cillum wes
-              anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa
-              terry richardson biodiesel. Art party scenester stumptown, tumblr
-              butcher vero sint qui sapiente accusamus tattooed echo park.
-            </p>-->
-          </div>
-          <div class="tab-pane fade" id="primarycontact" role="tabpanel">
-            <div class="row">
-              <div class="col-12" *ngIf="isProductPurchased">
-                <div class="d-flex mb-2">
-                  <h3 class="me-auto">Ajouter un avis</h3>
-                  <div class="cursor-pointer me-2">
-                    <i
-                      class="bx bxs-star fs-2 {{
-                        reviewStars > 0 ? 'text-warning' : 'text-secondary'
-                      }}"
-                      (click)="setReviewStars(1)"
-                    ></i>
-                    <i
-                      class="bx bxs-star fs-2 {{
-                        reviewStars > 1 ? 'text-warning' : 'text-secondary'
-                      }}"
-                      (click)="setReviewStars(2)"
-                    ></i>
-                    <i
-                      class="bx bxs-star fs-2 {{
-                        reviewStars > 2 ? 'text-warning' : 'text-secondary'
-                      }}"
-                      (click)="setReviewStars(3)"
-                    ></i>
-                    <i
-                      class="bx bxs-star fs-2 {{
-                        reviewStars > 3 ? 'text-warning' : 'text-secondary'
-                      }}"
-                      (click)="setReviewStars(4)"
-                    ></i>
-                    <i
-                      class="bx bxs-star fs-2 {{
-                        reviewStars > 4 ? 'text-warning' : 'text-secondary'
-                      }}"
-                      (click)="setReviewStars(5)"
-                    ></i>
+            </div>
+
+            <!-- Specifications Tab -->
+            <div class="tab-pane fade" id="specifications" role="tabpanel">
+              <div class="tab-content-wrapper">
+                <h5>Spécifications</h5>
+                <div class="specifications-list">
+                  <div class="spec-item">
+                    <span class="spec-label">Catégorie</span>
+                    <span class="spec-value">{{ product.category }}</span>
                   </div>
-                  <button class="btn btn-primary" (click)="postReview()">
-                    Publier l'avis
-                  </button>
+                  <div class="spec-item">
+                    <span class="spec-label">Marque</span>
+                    <span class="spec-value">{{ product.storeName }}</span>
+                  </div>
+
                 </div>
-                <textarea
-                  class="form-control"
-                  name="comment"
-                  id="comment"
-                  cols="30"
-                  rows="5"
-                  placeholder="Décrivez votre expérience avec ce produit"
-                  [(ngModel)]="reviewComment"
-                ></textarea>
               </div>
-              <h2 class="mt-3">Avis</h2>
-              <p *ngIf="reviews.length == 0">Aucun avis trouvé !</p>
-              <div class="col-4 p-3" *ngFor="let r of reviews">
-                <h6>{{ r.customerName }}</h6>
-                <div class="cursor-pointer">
-                  <i
-                    class="bx bxs-star fs-4 {{
-                      r.star > 0 ? 'text-warning' : 'text-secondary'
-                    }}"
-                  ></i>
-                  <i
-                    class="bx bxs-star fs-4 {{
-                      r.star > 1 ? 'text-warning' : 'text-secondary'
-                    }}"
-                  ></i>
-                  <i
-                    class="bx bxs-star fs-4 {{
-                      r.star > 2 ? 'text-warning' : 'text-secondary'
-                    }}"
-                  ></i>
-                  <i
-                    class="bx bxs-star fs-4 {{
-                      r.star > 3 ? 'text-warning' : 'text-secondary'
-                    }}"
-                  ></i>
-                  <i
-                    class="bx bxs-star fs-4 {{
-                      r.star > 4 ? 'text-warning' : 'text-secondary'
-                    }}"
-                  ></i>
+            </div>
+
+            <!-- Reviews Tab -->
+            <div class="tab-pane fade" id="reviews" role="tabpanel">
+              <div class="tab-content-wrapper">
+                <h5>Avis clients</h5>
+                <div class="reviews-summary">
+                  <div class="rating-overview">
+                    <div class="average-rating">
+                      <span class="rating-number">{{ avgStar/20 }}</span>
+                      <div class="stars">
+                        <i class="bi" [class]="avgStar >= 20 ? 'bi-star-fill' : 'bi-star'" [class.text-warning]="avgStar >= 20"></i>
+                        <i class="bi" [class]="avgStar >= 40 ? 'bi-star-fill' : 'bi-star'" [class.text-warning]="avgStar >= 40"></i>
+                        <i class="bi" [class]="avgStar >= 60 ? 'bi-star-fill' : 'bi-star'" [class.text-warning]="avgStar >= 60"></i>
+                        <i class="bi" [class]="avgStar >= 80 ? 'bi-star-fill' : 'bi-star'" [class.text-warning]="avgStar >= 80"></i>
+                        <i class="bi" [class]="avgStar >= 100 ? 'bi-star-fill' : 'bi-star'" [class.text-warning]="avgStar >= 100"></i>
+                      </div>
+                      <span class="total-reviews">{{ reviews.length }} avis</span>
+                    </div>
+                  </div>
                 </div>
-                <p>{{ r.comment }}</p>
+
+                <!-- Individual Reviews -->
+                <div class="reviews-list" *ngIf="reviews.length > 0; else noReviews">
+                  <div class="review-item" *ngFor="let review of reviews">
+                    <div class="review-header">
+                      <div class="reviewer-info">
+                        <div class="reviewer-avatar">
+                          <i class="bi bi-person-circle"></i>
+                        </div>
+                        <div class="reviewer-details">
+                          <span class="reviewer-name">{{ review.customerName }}</span>
+                          <div class="review-stars">
+                            <i class="bi" [class]="review.star >= 20 ? 'bi-star-fill text-warning' : 'bi-star'"></i>
+                            <i class="bi" [class]="review.star >= 40 ? 'bi-star-fill text-warning' : 'bi-star'"></i>
+                            <i class="bi" [class]="review.star >= 60 ? 'bi-star-fill text-warning' : 'bi-star'"></i>
+                            <i class="bi" [class]="review.star >= 80 ? 'bi-star-fill text-warning' : 'bi-star'"></i>
+                            <i class="bi" [class]="review.star >= 100 ? 'bi-star-fill text-warning' : 'bi-star'"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <span class="review-date"></span>
+                    </div>
+                    <div class="review-content">
+
+                    </div>
+                  </div>
+                </div>
+
+                <ng-template #noReviews>
+                  <div class="no-reviews">
+                    <i class="bi bi-chat-quote"></i>
+                    <h6>Aucun avis pour le moment</h6>
+                    <p>Soyez le premier à donner votre avis sur ce produit!</p>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+
+            <!-- Shipping Tab -->
+            <div class="tab-pane fade" id="shipping" role="tabpanel">
+              <div class="tab-content-wrapper">
+                <h5>Informations de livraison</h5>
+                <div class="shipping-info">
+                  <div class="shipping-option">
+                    <div class="shipping-icon">
+                      <i class="bi bi-truck"></i>
+                    </div>
+                    <div class="shipping-details">
+                      <h6>Livraison standard</h6>
+                      <p>3-5 jours ouvrables - Gratuit pour les commandes de plus de 50 TND</p>
+                    </div>
+                  </div>
+                  <div class="shipping-option">
+                    <div class="shipping-icon">
+                      <i class="bi bi-lightning"></i>
+                    </div>
+                    <div class="shipping-details">
+                      <h6>Livraison express</h6>
+                      <p>1-2 jours ouvrables - 15 TND</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -390,3 +388,4 @@
     </div>
   </div>
 </div>
+

@@ -14,6 +14,9 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
+getDiscountPercentage() {
+throw new Error('Method not implemented.');
+}
   product: Product = {
     id: 0,
     title: '',
@@ -45,6 +48,7 @@ export class ProductComponent implements OnInit {
   // Multi-image properties
   productImages: string[] = [];
   currentImageIndex: number = 0;
+p: any;
 
   constructor(
     private customerService: CustomerService,

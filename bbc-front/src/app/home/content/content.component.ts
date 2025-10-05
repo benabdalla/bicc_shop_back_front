@@ -5,11 +5,12 @@ import { Category } from 'src/app/interfaces/category';
 import { CustomerService } from 'src/app/services/customer.service';
 import { FileService } from 'src/app/services/file.service';
 import { CategoryService } from 'src/app/services/category.service';
+import { CartItem } from 'src/app/interfaces/cart-item';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css'],
+  styleUrls: ['./content.component.css']
 })
 export class ContentComponent implements OnInit {
   products: Product[] = [];
@@ -36,7 +37,7 @@ export class ContentComponent implements OnInit {
     private readonly customerService: CustomerService,
     private readonly router: Router,
     private readonly fileService: FileService,
-    private readonly categoryService: CategoryService
+    private readonly categoryService: CategoryService,
   ) {}
 
   ngOnInit(): void {
@@ -175,4 +176,83 @@ export class ContentComponent implements OnInit {
       });
     }
   }
+
+  addToCart(product: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    // Check if customer is logged in
+    const customer = this.customerService.getCustomer();
+    if (!customer) {
+      console.log("Veuillez vous connecter pour ajouter au panier");
+      // Replace with your notification method
+      // this.util.toastify(false, "Veuillez vous connecter pour ajouter au panier");
+      return;
+    }
+
+    let cartItem: any = {
+      customerId: customer.id,
+      productId: product.id,
+      sellerId: product.sellerId,
+      storeName: product.storeName,
+      productName: product.title,
+      productThumbnailUrl: this.getFirstImage(product),
+      productUnitPrice: product.salePrice > 0 ? product.salePrice : product.regularPrice,
+      productQuantity: 1,
+      subTotal: (product.salePrice > 0 ? product.salePrice : product.regularPrice) * 1,
+    };
+
+    this.customerService.addToCart(cartItem).subscribe((response) => {
+      console.log("Produit ajouté au panier");
+      // Replace with your notification method
+      // this.util.toastify(response != null, "Produit ajouté au panier");
+      this.customerService.toUpdateCart();
+    });
+  }
+
+  addToWishlist(product: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    // Check if customer is logged in
+    const customer = this.customerService.getCustomer();
+    if (!customer) {
+      console.log("Veuillez vous connecter pour ajouter aux favoris");
+      return;
+    }
+
+    // Simple wishlist implementation using localStorage
+    let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+
+    // Check if item already exists
+    const existingItem = wishlist.find((item: any) => item.id === product.id);
+
+    if (!existingItem) {
+      const wishlistItem = {
+        id: product.id,
+        title: product.title,
+        price: product.salePrice > 0 ? product.salePrice : product.regularPrice,
+        image: this.getFirstImage(product),
+        dateAdded: new Date().toISOString()
+      };
+
+      wishlist.push(wishlistItem);
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      console.log("Produit ajouté aux favoris");
+    } else {
+      console.log("Produit déjà dans les favoris");
+    }
+  }
+
+  buyNow(product: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    this.addToCart(product);
+    this.router.navigate(['cart']);
+  }
+
 }

@@ -1,0 +1,341 @@
+/* filepath: d:\BBC\bicc\bicc-main\bbc-front\src\app\home\footer\footer.component.css */
+
+.modern-footer {
+  background: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Social Media Section */
+.social-section {
+  background: linear-gradient(135deg, #b3b3b3 0%, #a8a8a8 100%);
+  padding: 1.5rem 0;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.social-icon.facebook { background: #3b5998; }
+.social-icon.instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+.social-icon.youtube { background: #ff0000; }
+.social-icon.twitter { background: #1da1f2; }
+.social-icon.linkedin { background: #0077b5; }
+
+.social-icon:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+/* Main Footer Content */
+.footer-content {
+  background: white;
+  padding: 3rem 0;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.footer-title {
+  color: #333;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+  color: #6c757d;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #dc3545;
+}
+
+/* Contact Information */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.contact-item i {
+  color: #dc3545;
+  font-size: 1.1rem;
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+}
+
+.hours div {
+  margin-bottom: 0.25rem;
+}
+
+/* Newsletter */
+.newsletter-text {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.newsletter-form {
+  margin-bottom: 2rem;
+}
+
+.input-group {
+  display: flex;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.input-group .form-control {
+  border: none;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 0;
+}
+
+.input-group .form-control:focus {
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.btn-subscribe {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  transition: background 0.3s ease;
+}
+
+.btn-subscribe:hover {
+  background: #218838;
+}
+
+/* Payment Methods */
+.payment-methods {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.payment-icon {
+  height: 30px;
+  width: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Services Section */
+.services-section {
+  background: #e9ecef;
+  padding: 2rem 0;
+}
+
+.service-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  height: 100%;
+}
+
+.service-item:hover {
+  transform: translateY(-5px);
+}
+
+.service-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+.service-icon i {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.service-text {
+  color: #333;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.phone-number {
+  color: #dc3545;
+  font-weight: 700;
+}
+
+/* Copyright Section */
+.copyright-section {
+  background: #333;
+  color: white;
+  padding: 1.5rem 0;
+}
+
+.copyright-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #adb5bd;
+}
+
+.footer-social-small {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.social-link {
+  color: #adb5bd;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .footer-content {
+    padding: 2rem 0;
+  }
+
+  .service-item {
+    margin-bottom: 1rem;
+  }
+
+  .services-section .row {
+    justify-content: center;
+  }
+
+  .services-section .col-lg {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .social-icons {
+    gap: 0.75rem;
+  }
+
+  .social-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+  }
+
+  .footer-content {
+    padding: 1.5rem 0;
+  }
+
+  .service-item {
+    padding: 1.5rem 1rem;
+  }
+
+  .service-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .service-icon i {
+    font-size: 1.3rem;
+  }
+
+  .service-text {
+    font-size: 0.8rem;
+  }
+
+  .footer-social-small {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .copyright-section .row {
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .social-section {
+    padding: 1rem 0;
+  }
+
+  .social-icons {
+    gap: 0.5rem;
+  }
+
+  .social-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+
+  .input-group {
+    flex-direction: column;
+  }
+
+  .btn-subscribe {
+    border-radius: 0 0 25px 25px;
+  }
+
+  .input-group .form-control {
+    border-radius: 25px 25px 0 0;
+  }
+
+  .payment-methods {
+    justify-content: center;
+  }
+}

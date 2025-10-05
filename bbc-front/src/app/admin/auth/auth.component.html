@@ -8,7 +8,7 @@
             <!-- Enhanced Header Section -->
             <div class="p-4">
               <div class="brand-logo">
-                <i class="fas fa-shield-alt"></i>
+                <i class="bi bi-shield-check"></i>
               </div>
               <h2 class="brand-title">Administration BICC</h2>
               <p class="brand-subtitle">Accès sécurisé administrateur</p>
@@ -18,7 +18,7 @@
             <div class="auth-form" *ngIf="!showSignup">
               <div class="form-header">
                 <h5>
-                  <i class="fas fa-sign-in-alt me-2"></i>
+                  <i class="bi bi-box-arrow-in-right me-2"></i>
                   Connexion Administrateur
                 </h5>
                 <p>Saisissez vos identifiants pour accéder au panneau d'administration</p>
@@ -27,7 +27,7 @@
               <form #loginForm="ngForm">
                 <div class="form-group">
                   <label class="form-label">
-                    <i class="fas fa-envelope me-2"></i>Adresse Email
+                    <i class="bi bi-envelope me-2"></i>Adresse Email
                   </label>
                   <div class="input-wrapper">
                     <input
@@ -41,18 +41,18 @@
                       #emailField="ngModel"
                       [class.is-invalid]="emailField.invalid && emailField.touched">
                     <div class="input-icon">
-                      <i class="fas fa-user"></i>
+                      <i class="bi bi-person"></i>
                     </div>
                   </div>
                   <div *ngIf="emailField.invalid && emailField.touched" class="error-message">
-                    <i class="fas fa-exclamation-circle"></i>
+                    <i class="bi bi-exclamation-circle"></i>
                     Veuillez entrer une adresse email valide
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="form-label">
-                    <i class="fas fa-lock me-2"></i>Mot de passe
+                    <i class="bi bi-lock me-2"></i>Mot de passe
                   </label>
                   <div class="input-wrapper">
                     <input
@@ -65,14 +65,14 @@
                       #passwordField="ngModel"
                       [class.is-invalid]="passwordField.invalid && passwordField.touched">
                     <div class="input-icon">
-                      <i class="fas fa-lock"></i>
+                      <i class="bi bi-lock"></i>
                     </div>
                     <div class="password-toggle" (click)="togglePassword()">
-                      <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                      <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
                     </div>
                   </div>
                   <div *ngIf="passwordField.invalid && passwordField.touched" class="error-message">
-                    <i class="fas fa-exclamation-circle"></i>
+                    <i class="bi bi-exclamation-circle"></i>
                     Le mot de passe est requis
                   </div>
                 </div>
@@ -94,7 +94,7 @@
                   (click)="onAdminLogin(loginForm.value)"
                   [disabled]="loginForm.invalid || isLoading">
                   <span *ngIf="!isLoading">
-                    <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Se connecter
                   </span>
                   <span *ngIf="isLoading">
                     <div class="spinner"></div>Connexion en cours...
@@ -107,7 +107,7 @@
             <div class="auth-form" *ngIf="showSignup">
               <div class="form-header">
                 <h5>
-                  <i class="fas fa-user-plus me-2"></i>
+                  <i class="bi bi-person-plus me-2"></i>
                   Créer un compte Admin
                 </h5>
                 <p>Créez un nouveau compte administrateur</p>
@@ -116,7 +116,7 @@
               <form #signupForm="ngForm">
                 <div class="form-group">
                   <label class="form-label">
-                    <i class="fas fa-user me-2"></i>Nom complet
+                    <i class="bi bi-person me-2"></i>Nom complet
                   </label>
                   <div class="input-wrapper">
                     <input
@@ -129,18 +129,18 @@
                       #nameField="ngModel"
                       [class.is-invalid]="nameField.invalid && nameField.touched">
                     <div class="input-icon">
-                      <i class="fas fa-user"></i>
+                      <i class="bi bi-person"></i>
                     </div>
                   </div>
                   <div *ngIf="nameField.invalid && nameField.touched" class="error-message">
-                    <i class="fas fa-exclamation-circle"></i>
+                    <i class="bi bi-exclamation-circle"></i>
                     Le nom complet est requis
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="form-label">
-                    <i class="fas fa-envelope me-2"></i>Adresse Email
+                    <i class="bi bi-envelope me-2"></i>Adresse Email
                   </label>
                   <div class="input-wrapper">
                     <input
@@ -154,18 +154,18 @@
                       #signupEmailField="ngModel"
                       [class.is-invalid]="signupEmailField.invalid && signupEmailField.touched">
                     <div class="input-icon">
-                      <i class="fas fa-envelope"></i>
+                      <i class="bi bi-envelope"></i>
                     </div>
                   </div>
                   <div *ngIf="signupEmailField.invalid && signupEmailField.touched" class="error-message">
-                    <i class="fas fa-exclamation-circle"></i>
+                    <i class="bi bi-exclamation-circle"></i>
                     Veuillez entrer une adresse email valide
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="form-label">
-                    <i class="fas fa-lock me-2"></i>Mot de passe
+                    <i class="bi bi-lock me-2"></i>Mot de passe
                   </label>
                   <div class="input-wrapper">
                     <input
@@ -179,14 +179,14 @@
                       #signupPasswordField="ngModel"
                       [class.is-invalid]="signupPasswordField.invalid && signupPasswordField.touched">
                     <div class="input-icon">
-                      <i class="fas fa-lock"></i>
+                      <i class="bi bi-lock"></i>
                     </div>
                     <div class="password-toggle" (click)="togglePassword()">
-                      <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                      <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
                     </div>
                   </div>
                   <div *ngIf="signupPasswordField.invalid && signupPasswordField.touched" class="error-message">
-                    <i class="fas fa-exclamation-circle"></i>
+                    <i class="bi bi-exclamation-circle"></i>
                     Le mot de passe doit contenir au moins 8 caractères
                   </div>
                 </div>
@@ -198,7 +198,7 @@
                   (click)="onAdminSignup(signupForm.value)"
                   [disabled]="signupForm.invalid || isLoading">
                   <span *ngIf="!isLoading">
-                    <i class="fas fa-user-plus me-2"></i>Créer le compte
+                    <i class="bi bi-person-plus me-2"></i>Créer le compte
                   </span>
                   <span *ngIf="isLoading">
                     <div class="spinner"></div>Création en cours...
@@ -222,11 +222,11 @@
             <!-- Enhanced Footer -->
             <div class="auth-footer">
               <div class="security-info">
-                <i class="fas fa-shield-alt"></i>
+                <i class="bi bi-shield-check"></i>
                 Votre connexion est sécurisée et chiffrée
               </div>
               <div class="admin-info">
-                <i class="fas fa-users-cog me-2"></i>
+                <i class="bi bi-gear me-2"></i>
                 Panneau d'administration BICC Shop
               </div>
               <p class="copyright">&copy; 2024 BICC Shop. Tous droits réservés.</p>
@@ -242,13 +242,13 @@
 <!-- Enhanced Alert Messages -->
 <div class="alert-container">
   <div *ngIf="errorMessage" class="alert alert-danger">
-    <i class="fas fa-exclamation-triangle"></i>
+    <i class="bi bi-exclamation-triangle"></i>
     <span>{{ errorMessage }}</span>
     <button type="button" class="btn-close" (click)="clearError()">&times;</button>
   </div>
 
   <div *ngIf="successMessage" class="alert alert-success">
-    <i class="fas fa-check-circle"></i>
+    <i class="bi bi-check-circle"></i>
     <span>{{ successMessage }}</span>
     <button type="button" class="btn-close" (click)="clearSuccess()">&times;</button>
   </div>

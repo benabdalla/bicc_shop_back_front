@@ -1,9 +1,11 @@
 <header>
   <div class="topbar d-flex align-items-center">
-    <nav class="navbar navbar-expand gap-3">
+    <nav class="navbar navbar-expand gap-3" >
+      <div (click)="reload()" class="toggle-menu"><i class="bx bx-menu"></i>
       <a routerLink="">
         <img src="favicon.ico" alt="logo" height="60px">
       </a>
+      </div>
       <div class="position-relative search-bar">
         <form (submit)="search()">
           <input
@@ -58,9 +60,9 @@
                         {{ item.productName }}
                       </h6>
                       <p class="cart-product-price mb-0">
-                        {{ item.productQuantity }} X TND{{
+                        {{ item.productQuantity }} X {{
                           item.productUnitPrice
-                        }}
+                        }} TND
                       </p>
                     </div>
                     <div class="">

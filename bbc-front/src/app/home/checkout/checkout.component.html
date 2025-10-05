@@ -210,10 +210,7 @@
                         {{ shippingCharge.toFixed(2) }}TND
                       </td>
                     </tr>
-                    <tr *ngIf="gatewayFee > 0">
-                      <td>💳 Frais de passerelle - {{ gatewayFeeReason }}</td>
-                      <td class="text-end">{{ gatewayFee.toFixed(2) }}TND</td>
-                    </tr>
+            
                     <tr *ngIf="tax > 0">
                       <td>📊 Taxe (5%)</td>
                       <td class="text-end">{{ tax.toFixed(2) }}TND</td>

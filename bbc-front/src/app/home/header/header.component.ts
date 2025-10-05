@@ -11,6 +11,7 @@ import { FileService } from 'src/app/services/file.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+[x: string]: any;
 
   customerName: string = '';
   searchQuery: string = '';
@@ -53,5 +54,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.cartTotal += item.subTotal;
       }
     });
+  }
+
+  readonly reload = () => {
+    console.log('Reloading the page...');
+    this.router.navigate(['']);
+       window.location.reload();
   }
 }

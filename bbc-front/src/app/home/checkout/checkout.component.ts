@@ -192,7 +192,7 @@ export class CheckoutComponent {
     this.paymentMethod = method;
 
     if (method == 'COD') {
-      this.gatewayFee = 50;
+      this.gatewayFee = 0;
       this.gatewayFeeReason = 'COD (Flat 50)';
       this.paymentStatus = 'Unpaid';
     }
