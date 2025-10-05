@@ -111,4 +111,12 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
+  getTotalOrderCount(): number {
+  if (!this.stat.orderStatus || !Array.isArray(this.stat.orderStatus)) {
+    return 0;
+  }
+  return this.stat.orderStatus.reduce((sum, status) => sum + Number(status.count), 0);
+}
+
 }

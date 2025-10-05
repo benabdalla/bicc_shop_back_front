@@ -77,7 +77,7 @@ public class CustomerDA {
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				Order o = new Order();
-				o.setId(rs.getInt("id"));
+				o.setId(rs.getInt("order_id"));
 				o.setOrderDate(rs.getDate("order_date"));
 				o.setOrderTotal(rs.getDouble("order_total"));
 				o.setCustomerId(rs.getInt("customer_id"));

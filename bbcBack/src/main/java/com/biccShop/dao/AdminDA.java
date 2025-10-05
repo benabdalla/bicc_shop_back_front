@@ -192,9 +192,8 @@ public class AdminDA {
 
 	public List<Order> getOrders() {
 		try {
-			pst = db.get().prepareStatement(
-					"SELECT order_id, order_date, order_total, customer_id, discount, shipping_charge, tax, shipping_street, shipping_city, shipping_post_code, shipping_state, shipping_country, orders.status, orders.sub_total, payment_status, payment_method, card_number, card_cvv, card_holder_name, card_expiry_date, gateway_fee FROM orders JOIN order_details USING(order_id) ORDER BY order_id DESC");
-			ResultSet rs = pst.executeQuery();
+			pst = db.get().prepareStatement("SELECT DISTINCT order_id, order_date, order_total, customer_id, discount, shipping_charge, tax, shipping_street, shipping_city, shipping_post_code, shipping_state, shipping_country, orders.status, orders.sub_total, payment_status, payment_method, card_number, card_cvv, card_holder_name, card_expiry_date, gateway_fee FROM orders JOIN order_details USING(order_id) ORDER BY order_id DESC");
+            ResultSet rs = pst.executeQuery();
 			List<Order> o = new ArrayList<>();
 			Order a;
 			while (rs.next()) {

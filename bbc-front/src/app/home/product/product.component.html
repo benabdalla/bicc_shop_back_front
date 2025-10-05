@@ -58,7 +58,6 @@
 
 
 
-
                 <!-- Discount Badge -->
                 <div *ngIf="product.salePrice < product.regularPrice" class="discount-badge">
 
@@ -101,7 +100,7 @@
               </div>
 
               <div class="wishlist-btn" (click)="toggleWishlist()">
-                <i class="bi" [class]="isWishlisted ? 'bi-heart-fill' : 'bi-heart'"></i>
+                <i class="fas" [class]="isWishlisted ? 'bi bi-heart-fill' : 'bi bi-heart'"></i>
               </div>
             </div>
 

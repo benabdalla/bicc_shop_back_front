@@ -18,7 +18,9 @@ export class OrdersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+      console .log("orders"+this.customerService.getCustomer().id);
     this.customerService.getOrders(this.customerService.getCustomer().id).subscribe((orders) => {
+      console .log(orders);
       this.orders = orders;
     });
   }
