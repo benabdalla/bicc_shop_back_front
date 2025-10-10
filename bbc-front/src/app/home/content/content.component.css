@@ -1196,10 +1196,8 @@
 .products-carousel-wrapper {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   border-radius: 20px;
   padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   margin-bottom: 3rem;
 }
 
@@ -1274,8 +1272,7 @@
   height: 50px;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1314,8 +1311,6 @@
   border-radius: 15px;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  background: white;
   cursor: pointer;
   height: 400px;
   width: 100%;
@@ -1323,7 +1318,7 @@
 
 .product-carousel-item .product-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+
 }
 
 .product-carousel-item .card-image-container {

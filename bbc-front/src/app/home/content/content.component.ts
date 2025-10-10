@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
 import { Category } from 'src/app/interfaces/category';
@@ -12,7 +12,7 @@ import { CartItem } from 'src/app/interfaces/cart-item';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.css']
 })
-export class ContentComponent implements OnInit {
+export class ContentComponent implements OnInit, AfterViewInit {
   products: Product[] = [];
   categories: Category[] = [];
   host: string = this.fileService.host;
@@ -21,11 +21,14 @@ export class ContentComponent implements OnInit {
 
   // Carousel properties
   currentSlideIndex: number = 0;
-  itemsPerSlide: number = 5;
   canScrollPrev: boolean = false;
   canScrollNext: boolean = true;
+  itemWidth: number = 280;
+  gap: number = 24;
+  itemsPerView: number = 4;
 
   @ViewChild('carouselTrack', { static: false }) carouselTrack!: ElementRef;
+  @ViewChild('categoryContainer', { static: false }) categoryContainer!: ElementRef;
 
   // Category colors for visual distinction
   private readonly categoryColors: string[] = [
@@ -52,6 +55,19 @@ export class ContentComponent implements OnInit {
     this.getCategories();
     this.getProducts();
     this.updateCarouselNavigation();
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.initializeCarousel();
+    }, 100);
+  }
+
+  // Initialize carousel
+  initializeCarousel(): void {
+    this.calculateItemsPerView();
+    this.updateCarouselNavigation();
+    this.updateCarouselPosition();
   }
 
   getCategories(): void {
@@ -186,36 +202,39 @@ export class ContentComponent implements OnInit {
     }
   }
 
+  // Calculate items per view based on container width
+  calculateItemsPerView(): void {
+    if (this.carouselTrack?.nativeElement) {
+      const containerWidth = this.carouselTrack.nativeElement.offsetWidth;
+      const itemWidthWithGap = this.itemWidth + this.gap;
+      this.itemsPerView = Math.floor(containerWidth / itemWidthWithGap);
+    } else {
+      // Fallback based on window width
+      const width = window.innerWidth;
+      if (width < 576) this.itemsPerView = 1;
+      else if (width < 768) this.itemsPerView = 2;
+      else if (width < 1200) this.itemsPerView = 3;
+      else if (width < 1400) this.itemsPerView = 4;
+      else this.itemsPerView = 5;
+    }
+  }
+
   // Get first 10 products for carousel
-  getCarouselProducts() {
+  getCarouselProducts(): Product[] {
     return this.products.slice(0, 10);
   }
 
   // Get carousel indicators
-  getCarouselIndicators() {
+  getCarouselIndicators(): number[] {
     const carouselProducts = this.getCarouselProducts();
-    const totalSlides = Math.ceil(carouselProducts.length / this.getItemsPerSlide());
+    const totalSlides = Math.max(1, Math.ceil(carouselProducts.length / this.itemsPerView));
     return Array(totalSlides).fill(0);
-  }
-
-  // Get items per slide based on screen size
-  getItemsPerSlide(): number {
-    if (typeof window !== 'undefined') {
-      const width = window.innerWidth;
-      if (width < 576) return 1;
-      if (width < 768) return 2;
-      if (width < 1200) return 3;
-      if (width < 1400) return 4;
-      return 5;
-    }
-    return 5;
   }
 
   // Scroll carousel
   scrollProductsCarousel(direction: 'prev' | 'next'): void {
-    const itemsPerSlide = this.getItemsPerSlide();
     const totalProducts = this.getCarouselProducts().length;
-    const maxSlideIndex = Math.ceil(totalProducts / itemsPerSlide) - 1;
+    const maxSlideIndex = Math.max(0, Math.ceil(totalProducts / this.itemsPerView) - 1);
 
     if (direction === 'next' && this.currentSlideIndex < maxSlideIndex) {
       this.currentSlideIndex++;
@@ -239,12 +258,13 @@ export class ContentComponent implements OnInit {
 
   // Update carousel position
   private updateCarouselPosition(): void {
-    if (this.carouselTrack) {
-      const itemsPerSlide = this.getItemsPerSlide();
-      const translateX = -(this.currentSlideIndex * (100 / itemsPerSlide));
+    if (this.carouselTrack?.nativeElement) {
+      const itemWidthWithGap = this.itemWidth + this.gap;
+      const translateX = -(this.currentSlideIndex * this.itemsPerView * itemWidthWithGap);
+
       const slideElement = this.carouselTrack.nativeElement.querySelector('.products-carousel-slide');
       if (slideElement) {
-        slideElement.style.transform = `translateX(${translateX}%)`;
+        slideElement.style.transform = `translateX(${translateX}px)`;
       }
     }
   }
@@ -265,8 +285,12 @@ export class ContentComponent implements OnInit {
   // Handle window resize
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
-    this.updateCarouselNavigation();
-    this.updateCarouselPosition();
+    this.currentSlideIndex = 0;
+    setTimeout(() => {
+      this.calculateItemsPerView();
+      this.updateCarouselNavigation();
+      this.updateCarouselPosition();
+    }, 100);
   }
 
   addToCart(product: any, event?: Event) {
@@ -346,5 +370,68 @@ export class ContentComponent implements OnInit {
     this.addToCart(product);
     this.router.navigate(['cart']);
   }
+
+  // Mock data generators (replace with your actual data)
+  private generateMockProducts(): any[] {
+    const products = [];
+    for (let i = 1; i <= 15; i++) {
+      products.push({
+        id: i,
+        title: `Produit ${i}`,
+        regularPrice: 100 + (i * 10),
+        salePrice: i % 3 === 0 ? 80 + (i * 8) : 0,
+        images: [`/api/images/product${i}.jpg`],
+        category: Math.floor(Math.random() * 5) + 1
+      });
+    }
+    return products;
+  }
+
+
+  // Calculate items per view based on container width
+  calculateItemsPerView1(): void {
+    if (this.carouselTrack?.nativeElement) {
+      const containerWidth = this.carouselTrack.nativeElement.offsetWidth;
+      const itemWidthWithGap = this.itemWidth + this.gap;
+      this.itemsPerView = Math.floor(containerWidth / itemWidthWithGap);
+    } else {
+      // Fallback based on window width
+      const width = window.innerWidth;
+      if (width < 576) this.itemsPerView = 1;
+      else if (width < 768) this.itemsPerView = 2;
+      else if (width < 1200) this.itemsPerView = 3;
+      else if (width < 1400) this.itemsPerView = 4;
+      else this.itemsPerView = 5;
+    }
+  }
+
+  // Get first 10 products for carousel
+  getCarouselProducts1(): Product[] {
+    return this.products.slice(0, 10);
+  }
+
+  // Get carousel indicators
+  getCarouselIndicators1(): number[] {
+    const carouselProducts = this.getCarouselProducts1();
+    const totalSlides = Math.max(1, Math.ceil(carouselProducts.length / this.itemsPerView));
+    return Array(totalSlides).fill(0);
+  }
+
+  // Scroll carousel
+  scrollProductsCarousel1(direction: 'prev' | 'next'): void {
+    const totalProducts = this.getCarouselProducts().length;
+    const maxSlideIndex = Math.max(0, Math.ceil(totalProducts / this.itemsPerView) - 1);
+
+    if (direction === 'next' && this.currentSlideIndex < maxSlideIndex) {
+      this.currentSlideIndex++;
+    } else if (direction === 'prev' && this.currentSlideIndex > 0) {
+      this.currentSlideIndex--;
+    }
+
+    this.updateCarouselPosition();
+    this.updateCarouselNavigation();
+  }
+
+
 
 }

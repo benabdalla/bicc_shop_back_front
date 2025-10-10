@@ -126,7 +126,8 @@
   </section>
 
   <section class="container">
-    <div class="d-flex align-items-center gap-1 mb-4">
+    <div class="d-flex align-items-center gap-1 mb-4" style="position: relative;
+    top: 30px;">
       <svg
         class="svg-style"
         focusable="false"
@@ -138,7 +139,7 @@
         ></path>
       </svg>
 
-      <h2 class="fw-bold fs-3 m-0">Nos nouveaux produits</h2>
+      <h2 class="fw-bold fs-3 m-0">Nos Nouveaux Produits</h2>
     </div>
 
     <!-- Products Carousel -->
@@ -256,6 +257,188 @@
           <div class="indicators-wrapper">
             <span
               *ngFor="let indicator of getCarouselIndicators(); let i = index"
+              class="indicator"
+              [class.active]="i === currentSlideIndex"
+              (click)="goToSlide(i)"
+              [attr.aria-label]="'Aller à la diapositive ' + (i + 1)"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Show More Button -->
+      <div
+        class="text-center mt-4"
+        *ngIf="products.length > 10"
+      >
+        <button
+          class="btn btn-outline-primary btn-lg show-more-btn"
+          (click)="showAllProducts()"
+        >
+          <i class="bi bi-grid-3x3-gap"></i>
+          Voir tous les produits ({{ products.length }})
+        </button>
+      </div>
+    </div>
+
+    <!-- No Products Message -->
+    <div *ngIf="products.length === 0" class="text-center py-5">
+      <div class="empty-state">
+        <i class="bi bi-box-seam display-1 text-muted"></i>
+        <h4 class="text-muted mt-3">Aucun produit trouvé</h4>
+        <p class="text-muted">
+          Revenez plus tard pour découvrir de nouveaux produits.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+
+
+          <img
+            src="../../../assets/images/slides/slide1.jpg"
+            class="d-block w-100"
+            style="height: 350px;
+    position: relative;
+    left: 150px;width: 80% !important;"
+            alt="Présentation des produits - diapositive 1"
+          />
+
+
+
+    <section class="container">
+    <div class="d-flex align-items-center gap-1 mb-4" style="position: relative;
+    top: 30px;">
+      <svg
+        class="svg-style"
+        focusable="false"
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M19.0765 9.48063H12.1242L15.5905 0L5 14.5194H11.9522L8.48592 24L19.0765 9.48063Z"
+        ></path>
+      </svg>
+
+      <h2 class="fw-bold fs-3 m-0">Nos Meilleurs Produits</h2>
+    </div>
+
+    <!-- Products Carousel -->
+    <div class="products-carousel-wrapper" *ngIf="products.length > 0">
+      <div class="products-carousel-container">
+        <!-- Navigation Buttons -->
+        <button
+          class="carousel-nav-btn carousel-nav-prev"
+          (click)="scrollProductsCarousel1('prev')"
+          [disabled]="!canScrollPrev"
+          aria-label="Produits précédents"
+        >
+          <i class="bi bi-chevron-left"></i>
+        </button>
+
+        <button
+          class="carousel-nav-btn carousel-nav-next"
+          (click)="scrollProductsCarousel1('next')"
+          [disabled]="!canScrollNext"
+          aria-label="Produits suivants"
+        >
+          <i class="bi bi-chevron-right"></i>
+        </button>
+
+        <!-- Carousel Track -->
+        <div class="products-carousel-track" #carouselTrack>
+          <div class="products-carousel-slide">
+            <div
+              *ngFor="let p of getCarouselProducts1(); let i = index"
+              class="product-carousel-item"
+              [attr.data-index]="i"
+            >
+              <div
+                class="card product-card h-100"
+                (click)="showProduct(p.id)"
+                (keydown.enter)="showProduct(p.id)"
+                (keydown.space)="showProduct(p.id)"
+                [attr.aria-label]="'Voir les détails pour ' + p.title"
+              >
+                <div class="card-image-container">
+                  <img
+                    src="{{ host + getFirstImage(p) }}"
+                    class="card-img-top product-image"
+                    [alt]="p.title"
+                    loading="lazy"
+                  />
+                  <div class="image-overlay">
+                    <i class="bi bi-eye-fill"></i>
+                    <span>Voir détails</span>
+                  </div>
+                </div>
+
+                <!-- Discount Badge -->
+                <div
+                  class="position-absolute top-0 end-0 m-2 product-discount"
+                  *ngIf="p.salePrice > 0 && p.salePrice < p.regularPrice"
+                >
+                  <span class="discount-badge">{{ getDiscountPercentage(p) }}</span>
+                </div>
+
+                <!-- New/Featured Badge -->
+                <div class="position-absolute top-0 start-0 m-2 product-badge">
+                  <span class="new-badge">Nouveau</span>
+                </div>
+
+                <div class="card-body d-flex flex-column">
+                  <h6 class="card-title product-title">{{ p.title }}</h6>
+
+                  <!-- Pricing -->
+                  <div class="price-container mt-auto">
+                    <div
+                      *ngIf="p.salePrice > 0 && p.salePrice !== p.regularPrice"
+                      class="price-discount"
+                    >
+                      <span class="original-price">{{ p.regularPrice }} TND</span>
+                      <span class="sale-price">{{ p.salePrice }} TND</span>
+                    </div>
+
+                    <div
+                      *ngIf="!(p.salePrice > 0 && p.salePrice !== p.regularPrice)"
+                      class="price-single"
+                    >
+                      <span class="current-price">{{ p.regularPrice }} TND</span>
+                    </div>
+                  </div>
+
+                  <!-- Quick Actions -->
+                  <div class="quick-actions mt-3">
+                    <button
+                      class="btn btn-outline-primary btn-sm quick-btn flex-fill"
+                      (click)="addToCart(p, $event)"
+                      title="Ajouter au panier"
+                    >
+                      <i class="bi bi-cart-plus"></i>
+                      <span class="d-none d-md-inline">Ajouter</span>
+                    </button>
+
+                    <button
+                      class="btn btn-success btn-sm quick-btn buy-now-btn flex-fill"
+                      (click)="buyNow(p, $event)"
+                      title="Acheter maintenant"
+                    >
+                      <i class="bi bi-lightning-fill"></i>
+                      <span class="d-none d-md-inline">Acheter</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators-custom">
+          <div class="indicators-wrapper">
+            <span
+              *ngFor="let indicator of getCarouselIndicators1(); let i = index"
               class="indicator"
               [class.active]="i === currentSlideIndex"
               (click)="goToSlide(i)"
