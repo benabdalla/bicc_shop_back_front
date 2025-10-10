@@ -210,11 +210,11 @@
                         {{ shippingCharge.toFixed(2) }}TND
                       </td>
                     </tr>
-            
-                    <tr *ngIf="tax > 0">
+
+                    <!-- <tr *ngIf="tax > 0">
                       <td>📊 Taxe (5%)</td>
                       <td class="text-end">{{ tax.toFixed(2) }}TND</td>
-                    </tr>
+                    </tr> -->
                     <tr *ngIf="discount > 0">
                       <td>🎁 Remise {{ discountReason }}</td>
                       <td class="text-end text-success">-{{ discount.toFixed(2) }}TND</td>

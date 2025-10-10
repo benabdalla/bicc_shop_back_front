@@ -10,6 +10,7 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
 import { TrackOrderComponent } from './track-order/track-order.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { StoresComponent } from '../home/footer/stores/stores.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
       { path: "track/:id", component: TrackOrderComponent },
       { path: "addresses", component: AddressesComponent },
       { path: "wishlist", component: WishlistComponent },
-      { path: "contact-us", component: ContactUsComponent }
+        { path: "contact-us", component: ContactUsComponent }
+
     ]
   },
   { path: "auth", component: AuthComponent }

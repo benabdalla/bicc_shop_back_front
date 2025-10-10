@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
 import { Category } from 'src/app/interfaces/category';
@@ -18,6 +18,14 @@ export class ContentComponent implements OnInit {
   host: string = this.fileService.host;
   loading: boolean = true;
   showScrollButtons: boolean = false;
+
+  // Carousel properties
+  currentSlideIndex: number = 0;
+  itemsPerSlide: number = 5;
+  canScrollPrev: boolean = false;
+  canScrollNext: boolean = true;
+
+  @ViewChild('carouselTrack', { static: false }) carouselTrack!: ElementRef;
 
   // Category colors for visual distinction
   private readonly categoryColors: string[] = [
@@ -43,6 +51,7 @@ export class ContentComponent implements OnInit {
   ngOnInit(): void {
     this.getCategories();
     this.getProducts();
+    this.updateCarouselNavigation();
   }
 
   getCategories(): void {
@@ -175,6 +184,89 @@ export class ContentComponent implements OnInit {
         behavior: 'smooth',
       });
     }
+  }
+
+  // Get first 10 products for carousel
+  getCarouselProducts() {
+    return this.products.slice(0, 10);
+  }
+
+  // Get carousel indicators
+  getCarouselIndicators() {
+    const carouselProducts = this.getCarouselProducts();
+    const totalSlides = Math.ceil(carouselProducts.length / this.getItemsPerSlide());
+    return Array(totalSlides).fill(0);
+  }
+
+  // Get items per slide based on screen size
+  getItemsPerSlide(): number {
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      if (width < 576) return 1;
+      if (width < 768) return 2;
+      if (width < 1200) return 3;
+      if (width < 1400) return 4;
+      return 5;
+    }
+    return 5;
+  }
+
+  // Scroll carousel
+  scrollProductsCarousel(direction: 'prev' | 'next'): void {
+    const itemsPerSlide = this.getItemsPerSlide();
+    const totalProducts = this.getCarouselProducts().length;
+    const maxSlideIndex = Math.ceil(totalProducts / itemsPerSlide) - 1;
+
+    if (direction === 'next' && this.currentSlideIndex < maxSlideIndex) {
+      this.currentSlideIndex++;
+    } else if (direction === 'prev' && this.currentSlideIndex > 0) {
+      this.currentSlideIndex--;
+    }
+
+    this.updateCarouselPosition();
+    this.updateCarouselNavigation();
+  }
+
+  // Go to specific slide
+  goToSlide(index: number): void {
+    const totalSlides = this.getCarouselIndicators().length;
+    if (index >= 0 && index < totalSlides) {
+      this.currentSlideIndex = index;
+      this.updateCarouselPosition();
+      this.updateCarouselNavigation();
+    }
+  }
+
+  // Update carousel position
+  private updateCarouselPosition(): void {
+    if (this.carouselTrack) {
+      const itemsPerSlide = this.getItemsPerSlide();
+      const translateX = -(this.currentSlideIndex * (100 / itemsPerSlide));
+      const slideElement = this.carouselTrack.nativeElement.querySelector('.products-carousel-slide');
+      if (slideElement) {
+        slideElement.style.transform = `translateX(${translateX}%)`;
+      }
+    }
+  }
+
+  // Update navigation buttons state
+  private updateCarouselNavigation(): void {
+    const totalSlides = this.getCarouselIndicators().length;
+    this.canScrollPrev = this.currentSlideIndex > 0;
+    this.canScrollNext = this.currentSlideIndex < totalSlides - 1;
+  }
+
+  // Show all products (navigate to products page)
+  showAllProducts(): void {
+    // Implement navigation to all products page
+    console.log('Navigate to all products');
+  }
+
+  // Handle window resize
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.updateCarouselNavigation();
+    this.updateCarouselPosition();
   }
 
   addToCart(product: any, event?: Event) {

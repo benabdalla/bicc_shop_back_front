@@ -1,99 +1,90 @@
-<div class="card">
-  <div class="card-body">
-    <h5 class="text-center">Détails du profil</h5>
-    <hr class="my-3" />
-    <div class="row mb-3">
-      <div class="col-sm-3">
-        <h6 class="mb-0">Nom complet</h6>
+<div class="profile-container">
+  <div class="profile-card">
+    <!-- Header Section -->
+    <div class="profile-header">
+      <div class="profile-avatar">
+        <img
+          src="assets/images/avatars/avatar-1.png"
+          alt="Profile Avatar"
+          class="avatar-img"
+        />
+        <div class="avatar-badge">
+          <i class="bi bi-person-check-fill"></i>
+        </div>
       </div>
-      <div class="col-sm-9 text-secondary">
-        <input type="text" class="form-control" [(ngModel)]="name" />
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col-sm-3">
-        <h6 class="mb-0">
-          Email (<span *ngIf="emailVerified" class="text-success">Vérifié</span>
+      <div class="profile-title">
+        <h4 class="profile-name">{{ name || 'Utilisateur' }}</h4>
+        <p class="profile-subtitle">Détails du profil</p>
+        <div class="verification-status">
           <span
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            *ngIf="!emailVerified"
-            class="text-danger cursor-pointer"
-            >Non vérifié</span
-          >)
-        </h6>
-      </div>
-      <div class="col-sm-9 text-secondary">
-        <input type="text" class="form-control" [(ngModel)]="email" />
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col-sm-3">
-        <h6 class="mb-0">Adresse</h6>
-      </div>
-      <div class="col-sm-9 text-secondary">
-        <input type="text" class="form-control" [(ngModel)]="address" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-9 text-secondary">
-        <input type="button" class="btn btn-primary px-4" value="Enregistrer" />
-      </div>
-    </div>
-
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">
-              Vérifier l'email
-            </h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <input
-              *ngIf="!emailVerifiedNotifyModal"
-              type="text"
-              class="form-control"
-              placeholder="Saisir le code de vérification"
-              name="verificationCode"
-              [(ngModel)]="verificationCode"
-            />
-            <h2 *ngIf="emailVerifiedNotifyModal" class="text-center p-3">
-              Votre email est vérifié !
-            </h2>
-          </div>
-          <div *ngIf="!emailVerifiedNotifyModal" class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              (click)="sendVerificationCode()"
-            >
-              Envoyer le code
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              (click)="verifyCode()"
-            >
-              Vérifier
-            </button>
-          </div>
+            class="status-badge"
+            [class]="emailVerified ? 'verified' : 'unverified'"
+          >
+            <i
+              class="bi"
+              [class]="
+                emailVerified
+                  ? 'bi-check-circle-fill'
+                  : 'bi-exclamation-circle-fill'
+              "
+            ></i>
+            {{ emailVerified ? 'Compte vérifié' : 'Vérification requise' }}
+          </span>
         </div>
       </div>
     </div>
+
+    <!-- Profile Information -->
+    <div class="profile-content">
+      <div class="info-section">
+        <h5 class="section-title">
+          <i class="bi bi-person-lines-fill"></i>
+          Informations personnelles
+        </h5>
+
+        <div class="info-grid">
+          <!-- Full Name -->
+          <div class="info-item">
+            <div class="info-label">
+              <i class="bi bi-person-fill"></i>
+              <span>Nom complet</span>
+            </div>
+            <div class="info-value">
+              <span class="value-text">{{ name || 'Non renseigné' }}</span>
+
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="info-item">
+            <div class="info-label">
+              <i class="bi bi-envelope-fill"></i>
+              <span>Adresse email</span>
+            </div>
+            <div class="info-value">
+              <span class="value-text">{{ email || 'Non renseigné' }}</span>
+              <div class="value-actions">
+
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div class="info-item">
+            <div class="info-label">
+              <i class="bi bi-geo-alt-fill"></i>
+              <span>Adresse</span>
+            </div>
+            <div class="info-value">
+              <span class="value-text">{{ address || 'Non renseigné' }}</span>
+
+            </div>
+          </div>
+
+
+    </div>
+
+
   </div>
 </div>

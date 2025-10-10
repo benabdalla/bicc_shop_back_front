@@ -1192,3 +1192,200 @@
     animation: none;
   }
 }
+
+.products-carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin-bottom: 3rem;
+}
+
+.products-carousel-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.products-carousel-track {
+  overflow: hidden;
+  border-radius: 15px;
+  width: 100%;
+}
+
+.products-carousel-slide {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 1.5rem;
+  padding: 0.5rem;
+  width: fit-content;
+}
+
+.product-carousel-item {
+  flex: 0 0 auto;
+  width: 280px; /* Fixed width for consistency */
+  max-width: 280px;
+}
+
+/* Responsive carousel items */
+@media (max-width: 1400px) {
+  .product-carousel-item {
+    width: 260px;
+    max-width: 260px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .product-carousel-item {
+    width: 240px;
+    max-width: 240px;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-carousel-item {
+    width: 220px;
+    max-width: 220px;
+  }
+
+  .products-carousel-slide {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-carousel-item {
+    width: 200px;
+    max-width: 200px;
+  }
+
+  .products-carousel-slide {
+    gap: 0.75rem;
+  }
+}
+
+/* Navigation Buttons */
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #667eea;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+
+.carousel-nav-btn:hover:not(:disabled) {
+  background: #667eea;
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.carousel-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: translateY(-50%);
+}
+
+.carousel-nav-prev {
+  left: 10px;
+}
+
+.carousel-nav-next {
+  right: 10px;
+}
+
+/* Product Card in Carousel */
+.product-carousel-item .product-card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background: white;
+  cursor: pointer;
+  height: 400px;
+  width: 100%;
+}
+
+.product-carousel-item .product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.product-carousel-item .card-image-container {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  background: #f8f9fa;
+}
+
+.product-carousel-item .product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-carousel-item .product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+/* Custom Indicators */
+.carousel-indicators-custom {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.indicators-wrapper {
+  display: inline-flex;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.indicator.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  transform: scale(1.2);
+}
+
+/* Show More Button */
+.show-more-btn {
+  border-radius: 25px;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  border: 2px solid #667eea;
+  color: #667eea;
+  transition: all 0.3s ease;
+}
+
+.show-more-btn:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}

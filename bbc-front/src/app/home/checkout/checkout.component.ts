@@ -182,7 +182,7 @@ export class CheckoutComponent {
       for (let item of this.cartItems) {
         this.cartTotal += item.subTotal;
       }
-      this.tax = this.cartTotal * 0.1;
+      // this.tax = this.cartTotal * 0.1;
       this.calcOrderTotal();
     });
   }

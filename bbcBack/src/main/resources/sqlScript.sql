@@ -158,6 +158,41 @@ CREATE TABLE wishlist (
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
+
+-- seller_withdrawals table
+CREATE TABLE seller_withdrawals (
+    sw_id INT AUTO_INCREMENT PRIMARY KEY,
+    seller_id INT NOT NULL,
+    store_name VARCHAR(100),
+    holder_name VARCHAR(100),
+    account_number VARCHAR(50),
+    bank_name VARCHAR(100),
+    branch_name VARCHAR(100),
+    request_date DATE NOT NULL,
+    amount DECIMAL(15,2) NOT NULL,
+    payment_date DATE,
+    status VARCHAR(20) DEFAULT 'Pending',
+    FOREIGN KEY (seller_id) REFERENCES sellers(seller_id)
+);
+
+
+CREATE TABLE complaint (
+    customer_id INT NOT NULL,
+    customer_name VARCHAR(255),
+    customer_email VARCHAR(255),
+    customer_address VARCHAR(255),
+    subject VARCHAR(255),
+    description TEXT,
+    PRIMARY KEY (customer_id)
+);
+
+-- Assumptions:
+-- - VARCHAR lengths are chosen for typical use cases.
+-- - Some fields (like status) are defaulted to 'Active' or 'Pending'.
+-- - Foreign keys are set to restrict or cascade as appropriate.
+-- - Some tables (like verification_code) are assumed to be for customers only.
+-- - wishlist table is inferred from JOINs with products and customers.
+-- - seller_withdrawals includes banking info for withdrawal requests.
 -- verification_code table
 CREATE TABLE verification_code (
     vc_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -182,27 +217,3 @@ CREATE TABLE refund_history (
     FOREIGN KEY (order_details_id) REFERENCES order_details(order_details_id),
     FOREIGN KEY (seller_id) REFERENCES sellers(seller_id)
 );
-
--- seller_withdrawals table
-CREATE TABLE seller_withdrawals (
-    sw_id INT AUTO_INCREMENT PRIMARY KEY,
-    seller_id INT NOT NULL,
-    store_name VARCHAR(100),
-    holder_name VARCHAR(100),
-    account_number VARCHAR(50),
-    bank_name VARCHAR(100),
-    branch_name VARCHAR(100),
-    request_date DATE NOT NULL,
-    amount DECIMAL(15,2) NOT NULL,
-    payment_date DATE,
-    status VARCHAR(20) DEFAULT 'Pending',
-    FOREIGN KEY (seller_id) REFERENCES sellers(seller_id)
-);
-
--- Assumptions:
--- - VARCHAR lengths are chosen for typical use cases.
--- - Some fields (like status) are defaulted to 'Active' or 'Pending'.
--- - Foreign keys are set to restrict or cascade as appropriate.
--- - Some tables (like verification_code) are assumed to be for customers only.
--- - wishlist table is inferred from JOINs with products and customers.
--- - seller_withdrawals includes banking info for withdrawal requests.
