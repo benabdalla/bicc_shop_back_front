@@ -79,28 +79,9 @@ p: any;
     }
   }
 
-  addToCart() {
-    let cartItem: CartItem = {
-      customerId: this.customerService.getCustomer().id,
-      productId: this.product.id,
-      sellerId: this.product.sellerId,
-      storeName: this.product.storeName,
-      productName: this.product.title,
-      productThumbnailUrl: this.product.thumbnailUrl,
-      productUnitPrice: this.product.salePrice,
-      productQuantity: this.quantity,
-      subTotal: this.product.salePrice * this.quantity,
-    };
-    this.customerService.addToCart(cartItem).subscribe((response) => {
-      this.util.toastify(response != null, "Added to cart");
-      this.customerService.toUpdateCart();
-    });
-  }
 
-  buyNow() {
-    this.addToCart();
-    this.router.navigate(['cart'])
-  }
+
+
 
   toggleWishlist() {
     let w: Wishlist = {
@@ -172,9 +153,10 @@ p: any;
     return this.product.thumbnailUrl.split(';').filter(img => img && img.trim() !== '');
   }
 
-  getFirstImage(): string {
-    const images = this.getAllImages();
-    return images.length > 0 ? images[0] : '';
+  getFirstImage(product?: any): string {
+    const targetProduct = product || this.product;
+    if (!targetProduct || !targetProduct.thumbnailUrl) return '';
+    return targetProduct.thumbnailUrl.split(';')[0] || '';
   }
 
   getCurrentImage(): string {
@@ -212,4 +194,68 @@ p: any;
     this.productImages = this.getAllImages();
     this.currentImageIndex = 0;
   }
+
+    addToCart(product?: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    // Use the passed product or the component's product
+    const targetProduct = product || this.product;
+
+    // Check if we have a valid product
+    if (!targetProduct || !targetProduct.id) {
+      console.log("Produit non disponible");
+      this.util.toastify(false, "Produit non disponible");
+      return;
+    }
+
+    // Check if customer is logged in
+    const customer = this.customerService.getCustomer();
+    if (!customer) {
+      console.log("Veuillez vous connecter pour ajouter au panier");
+      this.util.toastify(false, "Veuillez vous connecter pour ajouter au panier");
+      return;
+    }
+
+    let cartItem: any = {
+      customerId: customer.id,
+      productId: targetProduct.id,
+      sellerId: targetProduct.sellerId,
+      storeName: targetProduct.storeName,
+      productName: targetProduct.title,
+      productThumbnailUrl: this.getFirstImage(),
+      productUnitPrice: targetProduct.salePrice > 0 ? targetProduct.salePrice : targetProduct.regularPrice,
+      productQuantity: this.quantity, // Use the component's quantity
+      subTotal: (targetProduct.salePrice > 0 ? targetProduct.salePrice : targetProduct.regularPrice) * this.quantity,
+    };
+
+    this.customerService.addToCart(cartItem).subscribe({
+      next: (response) => {
+        console.log("Produit ajouté au panier");
+        this.util.toastify(response != null, "Produit ajouté au panier");
+        this.customerService.toUpdateCart();
+      },
+      error: (error) => {
+        console.error("Erreur lors de l'ajout au panier:", error);
+        this.util.toastify(false, "Erreur lors de l'ajout au panier");
+      }
+    });
+  }
+
+   buyNow(product?: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    // Use the passed product or the component's product
+    const targetProduct = product || this.product;
+
+    // Add to cart first
+    this.addToCart(targetProduct);
+
+    // Navigate to cart
+    this.router.navigate(['cart']);
+  }
+
 }

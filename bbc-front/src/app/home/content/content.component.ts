@@ -327,6 +327,15 @@ export class ContentComponent implements OnInit, AfterViewInit {
     });
   }
 
+   buyNow(product: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    this.addToCart(product);
+    this.router.navigate(['cart']);
+  }
+
   addToWishlist(product: any, event?: Event) {
     if (event) {
       event.stopPropagation();
@@ -362,14 +371,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
     }
   }
 
-  buyNow(product: any, event?: Event) {
-    if (event) {
-      event.stopPropagation();
-    }
 
-    this.addToCart(product);
-    this.router.navigate(['cart']);
-  }
 
   // Mock data generators (replace with your actual data)
   private generateMockProducts(): any[] {
