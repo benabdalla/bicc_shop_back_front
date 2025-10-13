@@ -38,6 +38,8 @@ services:
       JWT_EXPIRATION: 3600000
     ports:
       - "8080:8080"
+    volumes:
+      - uploads_data:/app/uploads
 
   frontend:
     build:
@@ -51,6 +53,7 @@ services:
 
 volumes:
   mysql_data:
+  uploads_data:
 
 
 
