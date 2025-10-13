@@ -105,23 +105,20 @@ button {
 .nice-number {
     padding: 5px;
     border: 1px solid rgba(14, 19, 23, 0.1);
-
-    button {
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
-        background-color: transparent;
-    }
-
-    input {
-        border: none;
-        height: 30px;
-        padding: 0 15px;
-    }
 }
 
+.nice-number button {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    background-color: transparent;
+}
 
-
+.nice-number input {
+    border: none;
+    height: 30px;
+    padding: 0 15px;
+}
 
 .total-cart-price {
     padding: 20px 25px 6px;

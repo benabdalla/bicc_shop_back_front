@@ -8,6 +8,6 @@ RUN npm run build -- --configuration production
 
 # ============= RUNTIME STAGE =============
 FROM nginx:stable-alpine
-COPY --from=build /app/dist/your-angular-app-name /usr/share/nginx/html
+COPY --from=build /app/dist/shop-sense /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

@@ -1,17 +1,19 @@
-version: "3.9"
-
 services:
   mysql:
     image: mysql:8.0
     container_name: mysql_bicc
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: bicc_db
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
 
   backend:
     build:
@@ -19,13 +21,14 @@ services:
       dockerfile: Dockerfile
     container_name: backend_bicc
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     environment:
       DB_HOST: mysql
       DB_PORT: 3306
       DB_NAME: bicc_db
       DB_USER: root
-      DB_PASSWORD:
+      DB_PASSWORD: root
       MAIL_HOST: smtp.gmail.com
       MAIL_PORT: 587
       MAIL_USERNAME: biccmanager2025@gmail.com
@@ -47,55 +50,6 @@ services:
 
 volumes:
   mysql_data:
-
-
-
-services:
-  mysql-db:
-    image: mysql:8.0
-    container_name: mysql-db
-    environment:
-      MYSQL_ROOT_PASSWORD: 
-      MYSQL_DATABASE: bicc_db
-    ports:
-      - "3306:3306"
-
-    healthcheck:
-      test:
-        ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "-proot"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # Spring Boot Application
-
-  spring-backend:
-    build:
-      context: ./project_assignment(backend)
-      dockerfile: Dockerfile
-    image: smoothcoode/pabackend
-    container_name: spring-backend
-    ports:
-      - "9090:9090"
-    environment:
-      - MYSQL_HOST=mysql-db # mysql-db is our mysql`container name and  this environment variable is predefined in spring boot application.propreties 
-    depends_on:
-      mysql-db:
-        condition: service_healthy
-    restart: unless-stopped
-
-
-  angular-frontend:
-    build:
-      context: ./project_assignment(frontend)
-      dockerfile: Dockerfile
-    image: smoothcoode/pafrontend
-    container_name: angular-frontend
-    ports:
-      - "4200:4200"
-    depends_on:
-      - spring-backend
-    restart: unless-stopped
 
 
 

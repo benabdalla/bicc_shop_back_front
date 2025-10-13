@@ -1,0 +1,13 @@
+docker pull node:18-alpine
+Great! The network connection is working now. Let me also pull the other required images:
+
+
+docker pull mysql:8.0
+
+docker pull nginx:stable-alpine
+
+docker pull maven:3.9.6-eclipse-temurin-17
+
+docker pull eclipse-temurin:17-jre
+
+docker compose up --build
