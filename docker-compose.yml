@@ -36,10 +36,15 @@ services:
       MAIL_PASSWORD: "eski vvog sknh yvzj"
       JWT_SECRET: "u3n3m7mVQ8pP2qk1Hq9z0bN4wC6f8lDaQqgNw2uDz0o="
       JWT_EXPIRATION: 3600000
+      # JasperReports Configuration
+      JASPER_REPORTS_PATH: /app/jasper
+      REPORTS_OUTPUT_PATH: /app/reports
     ports:
       - "8080:8080"
     volumes:
       - uploads_data:/app/uploads
+      - reports_data:/app/reports
+      - ./bbcBack/src/main/resources/jasper:/app/jasper:ro
 
   frontend:
     build:
@@ -51,9 +56,26 @@ services:
     ports:
       - "4200:80"
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin_bicc
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8081:80"
+
 volumes:
   mysql_data:
   uploads_data:
+  reports_data:
 
 
 

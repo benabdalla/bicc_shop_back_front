@@ -388,7 +388,7 @@
               </div>
             </div>
     <!-- Quick Action Buttons -->
-            <div class="quick-actions">
+            <!-- <div class="quick-actions">
               <button
                 class="btn btn-outline-primary btn-sm quick-btn"
                 (click)="addToCart(p, $event)"
@@ -407,7 +407,28 @@
               </button>
 
             </div>
+ -->
 
+     <!-- Quick Actions -->
+                  <div class="quick-actions mt-3">
+                    <button
+                      class="btn btn-outline-primary btn-sm quick-btn flex-fill"
+                      (click)="addToCart(p, $event)"
+                      title="Ajouter au panier"
+                    >
+                      <i class="bi bi-cart-plus"></i>
+                      <span class="d-none d-md-inline">Ajouter</span>
+                    </button>
+
+                    <button
+                      class="btn btn-success btn-sm quick-btn buy-now-btn flex-fill"
+                      (click)="buyNow(p, $event)"
+                      title="Acheter maintenant"
+                    >
+                      <i class="bi bi-lightning-fill"></i>
+                      <span class="d-none d-md-inline">Acheter</span>
+                    </button>
+                  </div>
 
           </div>
         </div>
