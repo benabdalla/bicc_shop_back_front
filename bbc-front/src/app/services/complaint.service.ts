@@ -23,50 +23,92 @@ export class ComplaintService {
 
   // Customer Methods
   createComplaint(complaint: Complaint): Observable<Complaint> {
-    return this.http.post<Complaint>(`${this.apiUrl}`, complaint, this.getHttpOptions());
+    // Use the admin notification endpoint for now since it's the only one available
+    return this.http.post<Complaint>(`${this.apiUrl}/admin/notify`, complaint, this.getHttpOptions());
   }
 
   getComplaintsByCustomer(customerId: number): Observable<ComplaintWithResponses[]> {
-    return this.http.get<ComplaintWithResponses[]>(`${this.apiUrl}/customer/${customerId}`, this.getHttpOptions());
+    // TODO: This endpoint doesn't exist on backend yet
+    // return this.http.get<ComplaintWithResponses[]>(`${this.apiUrl}/customer/${customerId}`, this.getHttpOptions());
+    return new Observable(observer => {
+      observer.next([]);
+      observer.complete();
+    });
   }
 
   getComplaintById(id: number): Observable<ComplaintWithResponses> {
-    return this.http.get<ComplaintWithResponses>(`${this.apiUrl}/${id}`, this.getHttpOptions());
+    // TODO: This endpoint doesn't exist on backend yet
+    // return this.http.get<ComplaintWithResponses>(`${this.apiUrl}/${id}`, this.getHttpOptions());
+    return new Observable(observer => {
+      observer.next({} as ComplaintWithResponses);
+      observer.complete();
+    });
   }
 
   updateComplaint(id: number, complaint: Partial<Complaint>): Observable<Complaint> {
-    return this.http.put<Complaint>(`${this.apiUrl}/${id}`, complaint, this.getHttpOptions());
+    // TODO: This endpoint doesn't exist on backend yet
+    // return this.http.put<Complaint>(`${this.apiUrl}/${id}`, complaint, this.getHttpOptions());
+    return new Observable(observer => {
+      observer.next({} as Complaint);
+      observer.complete();
+    });
   }
 
   // Admin Methods
   getAllComplaints(page: number = 0, size: number = 10, status?: ComplaintStatus, priority?: ComplaintPriority): Observable<any> {
-    let params = `page=${page}&size=${size}`;
-    if (status) params += `&status=${status}`;
-    if (priority) params += `&priority=${priority}`;
-
-    return this.http.get<any>(`${this.apiUrl}/admin?${params}`, this.getHttpOptions());
+    // TODO: This endpoint doesn't exist on backend yet
+    // let params = `page=${page}&size=${size}`;
+    // if (status) params += `&status=${status}`;
+    // if (priority) params += `&priority=${priority}`;
+    // return this.http.get<any>(`${this.apiUrl}/admin?${params}`, this.getHttpOptions());
+    return new Observable(observer => {
+      observer.next({ content: [], totalElements: 0 });
+      observer.complete();
+    });
   }
 
   updateComplaintStatus(id: number, status: ComplaintStatus): Observable<Complaint> {
-    return this.http.patch<Complaint>(`${this.apiUrl}/${id}/status`, { status }, this.getHttpOptions());
+    // TODO: This endpoint doesn't exist on backend yet
+    // return this.http.patch<Complaint>(`${this.apiUrl}/${id}/status`, { status }, this.getHttpOptions());
+    return new Observable(observer => {
+      observer.next({} as Complaint);
+      observer.complete();
+    });
   }
 
   updateComplaintPriority(id: number, priority: ComplaintPriority): Observable<Complaint> {
-    return this.http.patch<Complaint>(`${this.apiUrl}/${id}/priority`, { priority }, this.getHttpOptions());
+    // TODO: This endpoint doesn't exist on backend yet
+    // return this.http.patch<Complaint>(`${this.apiUrl}/${id}/priority`, { priority }, this.getHttpOptions());
+    return new Observable(observer => {
+      observer.next({} as Complaint);
+      observer.complete();
+    });
   }
 
   // Response Methods
   addComplaintResponse(response: ComplaintResponse): Observable<ComplaintResponse> {
-    return this.http.post<ComplaintResponse>(`${this.apiUrl}/responses`, response, this.getHttpOptions());
+    // TODO: This endpoint doesn't exist on backend yet
+    return new Observable(observer => {
+      observer.next({} as ComplaintResponse);
+      observer.complete();
+    });
   }
 
   getComplaintResponses(complaintId: number): Observable<ComplaintResponse[]> {
-    return this.http.get<ComplaintResponse[]>(`${this.apiUrl}/${complaintId}/responses`, this.getHttpOptions());
+    // TODO: This endpoint doesn't exist on backend yet
+    return new Observable(observer => {
+      observer.next([]);
+      observer.complete();
+    });
   }
 
   // Email Notifications
   sendNotificationEmail(complaintId: number, emailType: 'CREATED' | 'RESPONDED' | 'STATUS_CHANGED'): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${complaintId}/notify`, { emailType }, this.getHttpOptions());
+    // TODO: This endpoint doesn't exist on backend yet
+    return new Observable(observer => {
+      observer.next({ success: true });
+      observer.complete();
+    });
   }
 
   // Send email directly to admin when complaint is created
@@ -76,24 +118,28 @@ export class ComplaintService {
 
   // Send confirmation email to customer
   sendCustomerConfirmation(complaintId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${complaintId}/confirm`, {}, this.getHttpOptions());
+    // TODO: This endpoint doesn't exist on backend yet
+    return new Observable(observer => {
+      observer.next({ success: true });
+      observer.complete();
+    });
   }
 
   // File Upload
   uploadAttachment(file: File): Observable<any> {
-    const formData: FormData = new FormData();
-    formData.append('file', file, file.name);
-
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Authorization': token ? `Bearer ${token}` : ''
+    // TODO: This endpoint doesn't exist on backend yet
+    return new Observable(observer => {
+      observer.next({ url: 'placeholder-url' });
+      observer.complete();
     });
-
-    return this.http.post(`${this.apiUrl}/upload`, formData, { headers });
   }
 
   // Statistics for Admin Dashboard
   getComplaintStatistics(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/admin/statistics`, this.getHttpOptions());
+    // TODO: This endpoint doesn't exist on backend yet
+    return new Observable(observer => {
+      observer.next({ total: 0, pending: 0, resolved: 0 });
+      observer.complete();
+    });
   }
 }
